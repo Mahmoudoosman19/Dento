@@ -19,6 +19,7 @@ namespace UserManagement.Application
     {
         public static IServiceCollection AddUserApplicationStrapping(this IServiceCollection services)
         {
+            //mediatr
             services.AddMediatR(cfg =>
             {
                 cfg.RegisterServicesFromAssembly(AssemblyReference.Assembly);
@@ -32,8 +33,10 @@ namespace UserManagement.Application
                 AssemblyReference.Assembly,
                 includeInternalTypes: true);
 
+            //mapster
             services.AddMapsterConfig();
 
+            //other services
             services.AddScoped<BaseRegister, AdminRegisterType>();
             services.AddScoped<BaseRegister, CustomerRegisterType>();
             //services.AddScoped<BaseRegister, DesignerRegisterType>();

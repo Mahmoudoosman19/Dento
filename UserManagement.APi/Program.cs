@@ -8,7 +8,7 @@ using UserManagement.Infrastructure.Data;
 using UserManagement.Presentation;
 using UserManagement.Presentation.Extensions;
 
-namespace UserManagement.APi
+namespace DentalDesign.API
 {
     public class Program
     {
@@ -37,6 +37,7 @@ namespace UserManagement.APi
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
             var app = builder.Build();
 
             #region Configure Kestrel Middlewares

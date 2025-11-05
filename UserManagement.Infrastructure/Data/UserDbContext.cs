@@ -21,7 +21,7 @@ namespace UserManagement.Infrastructure.Data
         {
             modelBuilder.HasDefaultSchema("users");
             base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            modelBuilder.ApplyConfigurationsFromAssembly(AssemblyReference.Assembly);
         }
 
     }

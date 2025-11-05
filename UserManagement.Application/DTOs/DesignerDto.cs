@@ -2,7 +2,7 @@
 
 namespace UserManagement.Application.DTOs
 {
-    public class VendorDto
+    public class DesignerDto
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
