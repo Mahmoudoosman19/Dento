@@ -22,7 +22,7 @@ namespace UserManagement.Application.Features.Auth.Commands.Register.Abstract
             _roleRepo = roleRepo;
         }
 
-        public abstract DesignerRegisterType Type { get; set; }
+        public abstract RegisterType Type { get; set; }
 
         public abstract Task<ResponseModel> Register(RegisterCommand registerDto);
     }

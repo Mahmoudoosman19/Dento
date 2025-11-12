@@ -1,4 +1,6 @@
-﻿namespace UserManagement.Infrastructure.Constants;
+﻿using UserManagement.Domain.Entities;
+
+namespace UserManagement.Infrastructure.Constants;
 
 internal static class TableNames
 {
@@ -9,5 +11,6 @@ internal static class TableNames
     internal const string Address = nameof(Address);
     internal const string Customer = nameof(Customer);
     internal const string Designer = nameof(Designer);
+    internal const string RolePermission = nameof(RolePermission);
 
 }

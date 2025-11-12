@@ -18,7 +18,7 @@ namespace UserManagement.Application.Features.OTP.Commands.CreateOTP
             RuleFor(x => x.Email)
                 .NotEmpty().WithMessage(Messages.EmptyField)
                 .EmailAddress().WithMessage(Messages.InvalidEmailAddress)
-                .MustAsync(((email, token) => userManager.IsUserExistByEmailAsync(email)))
+                //.MustAsync(((email, token) => userManager.IsUserExistByEmailAsync(email)))
                 .WithMessage(Messages.NotFound);
         }
     }

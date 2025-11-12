@@ -4,6 +4,7 @@ using Common.Domain.Shared;
 using Microsoft.Extensions.Options;
 using UserManagement.Application.Abstractions;
 using UserManagement.Application.Specifications.User;
+using UserManagement.Domain.Entities;
 using UserManagement.Domain.Options;
 
 namespace UserManagement.Application.Features.OTP.Commands.CreateOTP
@@ -31,19 +32,26 @@ namespace UserManagement.Application.Features.OTP.Commands.CreateOTP
 
             var expirationTime = DateTime.UtcNow.AddMinutes(_otpOptions.ExpirationTimeInMinutes);
 
-            var otp = new Domain.Entities.OTP(request.Type, _otpOptions.CodeLength, expirationTime, request.Purpose);
+            
+            var otp = new Domain.Entities.OTP
+                (request.Type,
+                 _otpOptions.CodeLength,
+                expirationTime,
+                request.Purpose);
 
-            user!.SetOtp(otp);
 
             if (oldOtp is not null)
                 _unitOfWork.Repository<Domain.Entities.OTP>().Delete(oldOtp);
 
+            user!.SetOtp(otp);
+
+
             await _unitOfWork.CompleteAsync(cancellationToken);
 
             // Send Email
-            _emailService.SendEmail(user.Email!,
-                                    "OTP for Reset Password",
-                                    $"OTP is {otp.Code}");
+            //_emailService.SendEmail(user.Email!,
+            //                        "OTP for Reset Password",
+            //                        $"OTP is {otp.Code}");
 
             return ResponseModel.Success(new CreateOtpResponse() { OTP = otp, UserId = user.Id, Email = user.Email! });
             // return ResponseModel.Success(Messages.SuccessfulOperation);

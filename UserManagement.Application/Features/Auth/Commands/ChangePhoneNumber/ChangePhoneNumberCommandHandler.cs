@@ -25,15 +25,15 @@ namespace UserManagement.Application.Features.Auth.Commands.ChangePhoneNumber
             if (user == null)
                 return ResponseModel.Failure(Messages.FailedToFetchUserData);
 
-            var existingUser = await _userRepo.GetByIdAsync(_tokenExtractor.GetUserId());
-            if (existingUser == null)
-                return ResponseModel.Failure(Messages.FailedToFetchUserData);
+            //var existingUser = await _userRepo.GetByIdAsync(_tokenExtractor.GetUserId());
+            //if (existingUser == null)
+            //    return ResponseModel.Failure(Messages.FailedToFetchUserData);
 
             user.PhoneNumber = request.PhoneNumber;
             await _userManager.UpdateAsync(user);
 
-            existingUser.PhoneNumber = request.PhoneNumber;
-            _userRepo.Update(existingUser);
+            //existingUser.PhoneNumber = request.PhoneNumber;
+            //_userRepo.Update(existingUser);
             await _userRepo.SaveChangesAsync();
 
             return ResponseModel.Success(Messages.SuccessfulOperation);

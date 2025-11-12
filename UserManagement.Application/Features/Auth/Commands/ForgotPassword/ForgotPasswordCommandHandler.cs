@@ -19,9 +19,11 @@ public class ForgotPasswordCommandHandler : ICommandHandler<ForgotPasswordComman
     }
     public async Task<ResponseModel> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
     {
+        //get user
         var user =  _uow.Repository<Domain.Entities.User>()
             .GetEntityWithSpec(new GetUserByEmailWithOtpSpecification(request.Email));
         
+
         _userManager.ChangePassword(user!, request.NewPassword);
         
         _uow.Repository<Domain.Entities.OTP>().Delete(user!.Otp!);

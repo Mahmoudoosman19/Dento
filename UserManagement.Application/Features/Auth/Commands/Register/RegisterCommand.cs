@@ -10,18 +10,18 @@ namespace UserManagement.Application.Features.Auth.Commands.Register
         public DesignerRegisterDto? Designer { get; init; }
         public CustomerRegisterDto? Customer { get; init; }
         public SupervisorRegisterDto? Supervisor { get; init; }
-        public DesignerRegisterType Type { get; init; }
+        public RegisterType Type { get; init; }
 
-        public RegisterCommand(SupervisorRegisterDto supervisor ,DesignerRegisterType type)
+        public RegisterCommand(SupervisorRegisterDto supervisor ,RegisterType type)
         {
             this.Supervisor = supervisor;   
             this.Type = type; }  
-        public RegisterCommand(DesignerRegisterDto designer , DesignerRegisterType type)
+        public RegisterCommand(DesignerRegisterDto designer , RegisterType type)
         {
             this.Designer = designer;
             this.Type = type;
         }
-        public RegisterCommand(CustomerRegisterDto customer, DesignerRegisterType type)
+        public RegisterCommand(CustomerRegisterDto customer, RegisterType type)
         {
             this.Customer = customer;
             this.Type = type;

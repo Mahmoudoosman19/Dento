@@ -1,6 +1,6 @@
 ﻿namespace UserManagement.Application.Features.Auth.Commands.Register.Abstract
 {
-    public enum DesignerRegisterType
+    public enum RegisterType
     {
         Admin,
         Supervisor,

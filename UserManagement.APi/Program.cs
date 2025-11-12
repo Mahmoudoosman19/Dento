@@ -2,11 +2,14 @@ using IdentityHelper.BI;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using UserManagement.API.Configurations;
+using UserManagement.API.OptionsSetup;
 using UserManagement.Application;
 using UserManagement.Infrastructure;
 using UserManagement.Infrastructure.Data;
+using UserManagement.Infrastructure.Seeders;
 using UserManagement.Presentation;
 using UserManagement.Presentation.Extensions;
+using UserManagement.Presentation.OptionsSetup;
 
 namespace DentalDesign.API
 {
@@ -22,11 +25,18 @@ namespace DentalDesign.API
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddHttpClient();
 
+            //Configure Options
+            builder.Services.ConfigureOptions<OTPOptionsSetup>();
+            builder.Services.ConfigureOptions<JwtOptionsSetup>();
+
+
             // Application DI Configurations
             builder.Services.AddUserSevice(builder.Configuration);
             builder.Services.AddUserApplicationStrapping();
             builder.Services.AddUserInfrastructureStrapping();
             builder.Services.AddAppServicesDIConfig();
+            builder.Services.AddDBSeederExtension();
+            builder.Services.AddUserPresentationStrapping();
 
             // Identity & Authentication Services
             builder.Services.AddIdentityHelper();

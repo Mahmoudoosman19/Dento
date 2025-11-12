@@ -23,8 +23,10 @@ public class ForgotPasswordCommandValidation
         
         RuleFor(x => x.NewPassword)
             .NotEmpty().WithMessage(Messages.EmptyField);
+        
         RuleFor(x => x.ConfirmPassword)
             .NotEmpty().WithMessage(Messages.EmptyField);
+        
         
         RuleFor(x => x.Email)
             .NotEmpty().WithMessage(Messages.EmptyField)
@@ -57,7 +59,7 @@ public class ForgotPasswordCommandValidation
             return;
         }
 
-        if (otp.IsUsed && otp.ExpireOn > DateTime.UtcNow)
+        if (!otp.IsUsed && otp.ExpireOn > DateTime.UtcNow)
             return;
         else
             context.AddFailure("OTP", Messages.NotFound);

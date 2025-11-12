@@ -13,7 +13,6 @@ namespace UserManagement.API.Configurations
                         .FromAssemblies(
                             Infrastructure.AssemblyReference.Assembly,
                             Application.AssemblyReference.Assembly,
-                            Presentation.AssemblyReference.Assembly,
                             Service.AssemblyReference.Assembly)
                         .AddClasses(false)
                         .UsingRegistrationStrategy(RegistrationStrategy.Skip)

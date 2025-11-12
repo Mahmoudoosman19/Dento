@@ -10,7 +10,7 @@ namespace UserManagement.Application.Features.Auth.Commands.Register.Base
         {
             _baseRegisters = baseRegisters;
         }
-        public BaseRegister Register(DesignerRegisterType type)
+        public BaseRegister Register(RegisterType type)
         {
             var register = _baseRegisters.FirstOrDefault(r => r.Type == type);
 

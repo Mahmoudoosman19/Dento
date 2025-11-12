@@ -15,28 +15,28 @@ namespace UserManagement.Application.Features.Auth.Commands.Register
             RuleFor(x => x.Type)
                 .IsInEnum().WithMessage(Messages.IncorrectData);
 
-            When(x => x.Type == DesignerRegisterType.Admin, () =>
+            When(x => x.Type == RegisterType.Admin, () =>
             {
                 RuleFor(x => x.Admin)
                 .NotNull().WithMessage(Messages.EmptyField)
                 .SetValidator(new AdminRegisterDtoValidator(userManager)!);
             });
 
-            When(x => x.Type == DesignerRegisterType.Designer, () =>
+            When(x => x.Type == RegisterType.Designer, () =>
             {
                 RuleFor(x => x.Designer)
                 .NotNull().WithMessage(Messages.EmptyField)
                 .SetValidator(new DesignerRegisterDtoValidator(userManager)!);
             });
 
-            When(x => x.Type == DesignerRegisterType.Customer, () =>
+            When(x => x.Type == RegisterType.Customer, () =>
             {
                 RuleFor(x => x.Customer)
                 .NotNull().WithMessage(Messages.EmptyField)
                 .SetValidator(new CustomerRegisterDtoValidator(userManager)!);
             });
 
-            When(x => x.Type == DesignerRegisterType.Supervisor, () =>
+            When(x => x.Type == RegisterType.Supervisor, () =>
             {
                 RuleFor(x => x.Supervisor)
                 .NotNull().WithMessage(Messages.EmptyField)

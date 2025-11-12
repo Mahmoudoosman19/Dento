@@ -2,6 +2,7 @@
 using FluentValidation;
 using Mapster;
 using MapsterMapper;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using UserManagement.Application.Features.Auth.Commands.Register.Abstract;
 using UserManagement.Application.Features.Auth.Commands.Register.Type;
 using UserManagement.Application.Features.OTP.Commands.ConfirmOTP.Abstract;
 using UserManagement.Application.Features.OTP.Commands.ConfirmOTP.Type;
+using UserManagement.Domain.Options;
 
 namespace UserManagement.Application
 {
@@ -47,7 +49,7 @@ namespace UserManagement.Application
             services.AddScoped<BaseConfirmOTP, ConfirmUserPhoneType>();
             services.AddScoped<BaseConfirmOTP, ConfirmForgotPasswordType>();
 
-
+           
             return services;
         }
         private static IServiceCollection AddMapsterConfig(this IServiceCollection services)

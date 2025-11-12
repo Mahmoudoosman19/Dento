@@ -2,6 +2,6 @@
 {
     internal interface IRegisterFactory
     {
-        BaseRegister Register(DesignerRegisterType type);
+        BaseRegister Register(RegisterType type);
     }
 }

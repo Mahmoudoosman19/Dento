@@ -21,7 +21,7 @@ namespace UserManagement.Application.Features.Auth.Commands.Register.Type
                   roleRepo)
         { }
 
-        public override DesignerRegisterType Type { get; set; } = DesignerRegisterType.Customer;
+        public override RegisterType Type { get; set; } = RegisterType.Customer;
 
         public async override Task<ResponseModel> Register(RegisterCommand registerDto)
         {

@@ -50,7 +50,7 @@ internal class UserConfiguration : IEntityTypeConfiguration<User>
         
         builder.HasOne(u => u.Otp)
                .WithOne()
-               .OnDelete(DeleteBehavior.Cascade);
+               .OnDelete(DeleteBehavior.SetNull);
 
         builder.Property(u => u.DeletedAt)
                .IsRequired(false);
