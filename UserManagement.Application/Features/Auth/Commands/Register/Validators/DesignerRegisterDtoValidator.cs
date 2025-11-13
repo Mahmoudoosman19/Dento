@@ -11,7 +11,7 @@ namespace UserManagement.Application.Features.Auth.Commands.Register.Validators
     internal class DesignerRegisterDtoValidator : AbstractValidator<DesignerRegisterDto>
     {
         private readonly CustomUserManager _userManager;
-        private readonly IGenericRepository<Designer> _venderRepo;
+        private readonly IGenericRepository<Domain.Entities.Designer> _designerRepo;
         public DesignerRegisterDtoValidator(CustomUserManager userManager)
         {
             _userManager = userManager;

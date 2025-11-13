@@ -23,5 +23,18 @@ namespace UserManagement.Domain.Entites
         public DateTime? DeletedAt { get; set; }
 
         public DateTime? RestoredAt { get; set; }
+        public void setData(string name, string addressName, string city, string phoneNumber, string floor, Guid userId)
+        {
+            Name = name;
+            PhoneNumber = phoneNumber;
+            Floor = floor;
+            City = city;
+            AddressName = addressName;
+            UserId = userId;
+        }
+        public void Restored()
+        {
+            IsDeleted = false;
+        }
     }
 }

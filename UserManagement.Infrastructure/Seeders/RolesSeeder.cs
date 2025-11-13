@@ -19,7 +19,7 @@ namespace UserManagement.Infrastructure.Seeders
             {
                 new Role("مدير", "Admin"),
                 new Role("مشرف", "SuperVisor"),
-                new Role("بائع", "Vendor"),
+                new Role("مصمم", "Designer"),
                 new Role("زبون", "Customer"),
             };
 

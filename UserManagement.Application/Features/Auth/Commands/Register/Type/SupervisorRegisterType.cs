@@ -25,12 +25,17 @@ namespace UserManagement.Application.Features.Auth.Commands.Register.Type
 
         public async override Task<ResponseModel> Register(RegisterCommand registerDto)
         {
+            // Map to User entity
             var user = _mapper.Map<Domain.Entities.User>(registerDto.Supervisor!);
             user.SetStatus(UserStatus.Active);
+
+            // Assign Role
             var adminRole = _roleRepo.GetEntityWithSpec(new GetRoleByNameEnSpecification(Roles.SuperVisor.ToString()));
             user.AssignRole(adminRole!.Id);
             user.ConfirmEmail();
             user.ConfirmPhoneNumber();
+
+            // Create user in Identity
             var result = await _userManager.CreateAsync(user, registerDto.Supervisor!.Password);
             if (!result.Succeeded)
             {

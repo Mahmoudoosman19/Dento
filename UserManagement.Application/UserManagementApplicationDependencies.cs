@@ -41,9 +41,9 @@ namespace UserManagement.Application
             //other services
             services.AddScoped<BaseRegister, AdminRegisterType>();
             services.AddScoped<BaseRegister, CustomerRegisterType>();
-            //services.AddScoped<BaseRegister, DesignerRegisterType>();
+            services.AddScoped<BaseRegister, DesignerRegisterType>();
             services.AddScoped<BaseRegister, SupervisorRegisterType>();
-            //services.AddScoped<BaseRegister, VendorRegisterByAdminType>();
+            services.AddScoped<BaseRegister, DesignerRegisterByAdminType>();
 
             services.AddScoped<BaseConfirmOTP, ConfirmUserEmailType>();
             services.AddScoped<BaseConfirmOTP, ConfirmUserPhoneType>();
