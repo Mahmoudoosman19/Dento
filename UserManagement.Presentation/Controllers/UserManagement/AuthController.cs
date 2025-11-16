@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using UserManagement.Application.Features.Auth.Commands.ChangePassword;
 using UserManagement.Application.Features.Auth.Commands.ChangePhoneNumber;
 using UserManagement.Application.Features.Auth.Commands.ChangeUserEmail;
+using UserManagement.Application.Features.Auth.Commands.ExternalLogin;
+using UserManagement.Application.Features.Auth.Commands.ExternalLoginExtraDetails;
 using UserManagement.Application.Features.Auth.Commands.ForgotPassword;
 using UserManagement.Application.Features.Auth.Commands.Login;
 using UserManagement.Application.Features.Auth.Commands.Register;
@@ -27,6 +29,22 @@ namespace UserManagement.Presentation.Controllers.UserManagement
             var result = await Sender.Send(command);
             return HandleResult(result);
         }
+        [HttpPost("external-login")]
+        public async Task<IActionResult> ExternalLogin([FromBody] ExternalLoginCommand command)
+        {
+            var result = await Sender.Send(command);
+
+            return HandleResult(result);
+        }
+
+        [HttpPost("external-login-extra-details")]
+        public async Task<IActionResult> ExternalLoginExtraDetails([FromBody] ExternalLoginExtraDetailsCommand command)
+        {
+            var result = await Sender.Send(command);
+
+            return HandleResult(result);
+        }
+
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromForm] RegisterCommand command)
         {
