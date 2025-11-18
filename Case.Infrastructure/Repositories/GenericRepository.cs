@@ -1,20 +1,19 @@
-﻿using Common.Domain.Repositories;
+﻿using Case.Infrastructure.Data;
+using Common.Domain.Repositories;
 using Common.Domain.Specification;
 using Common.Infrastructure.Specifications;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
-using UserManagement.Infrastructure.Data;
 
-namespace UserManagement.Infrastructure.Repositories
+namespace Case.Infrastructure.Repositories
 {
-    internal class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class 
+    internal class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
-    
-        private readonly UserDbContext _context;
+        private readonly CaseDbContext _context;
         protected DbSet<TEntity> _entity;
 
-        public GenericRepository(UserDbContext context)
+        public GenericRepository(CaseDbContext context)
         {
             _context = context;
             _entity = context.Set<TEntity>();

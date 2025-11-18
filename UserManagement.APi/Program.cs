@@ -1,3 +1,6 @@
+using Case.Application;
+using Case.Infrastructure;
+using Case.Presentation;
 using IdentityHelper.BI;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
@@ -29,6 +32,10 @@ namespace DentalDesign.API
             builder.Services.ConfigureOptions<OTPOptionsSetup>();
             builder.Services.ConfigureOptions<JwtOptionsSetup>();
 
+            // Add Case Strapping
+            builder.Services.AddCaseApplicationStrapping();
+            builder.Services.AddCasePresentationStrapping(builder.Configuration);
+            builder.Services.AddCaseInfrastructureStrapping();
 
             // Application DI Configurations
             builder.Services.AddUserSevice(builder.Configuration);
@@ -43,7 +50,8 @@ namespace DentalDesign.API
 
 
             builder.Services.AddControllers()
-                .AddApplicationPart(UserManagement.Presentation.AssemblyReference.Assembly);
+                .AddApplicationPart(UserManagement.Presentation.AssemblyReference.Assembly)
+                .AddApplicationPart(Case.Presentation.AssemblyReference.Assembly);
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
