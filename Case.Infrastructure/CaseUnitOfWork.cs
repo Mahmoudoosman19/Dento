@@ -1,16 +1,18 @@
 ﻿using Common.Domain.Repositories;
 using System.Collections;
-using UserManagement.Infrastructure.Data;
-using UserManagement.Infrastructure.Repositories;
+using Case.Infrastructure.Data;
+using Case.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Case.Domain.Repositories;
 
-namespace UserManagement.Infrastructure;
+namespace Case.Infrastructure;
 
-internal sealed class UnitOfWork : IUnitOfWork
+internal sealed class CaseUnitOfWork : ICaseUnitOfWork 
 {
-    private readonly UserDbContext _context;
+    private readonly CaseDbContext _context;
     private Hashtable _repositories;
 
-    public UnitOfWork(UserDbContext context)
+    public CaseUnitOfWork(CaseDbContext context)
     {
         _context = context;
     }
