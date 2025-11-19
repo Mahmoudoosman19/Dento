@@ -4,30 +4,24 @@ namespace UserManagement.Domain.Entities
 {
     public class Permission : Entity<long>, IAuditableEntity
     {
-        public string NameAr { get; private set; } = null!;
-        public string NameEn { get; private set; } = null!;
+        public string Name { get; private set; } = null!;
         public DateTime CreatedOnUtc { get; set; }
         public DateTime? ModifiedOnUtc { get; set; }
 
-        public Permission(string nameAr, string nameEn)
+        public Permission(string name)
         {
-            SetName(nameAr, nameEn);
+            SetName(name);
         }
 
-        public void SetName(string nameAr, string nameEn)
+        public void SetName(string name)
         {
-            if (string.IsNullOrWhiteSpace(nameAr))
+
+            if (string.IsNullOrWhiteSpace(name))
             {
-                throw new ArgumentException("Arabic name cannot be null or empty", nameof(nameAr));
+                throw new ArgumentException("English name cannot be null or empty", nameof(name));
             }
 
-            if (string.IsNullOrWhiteSpace(nameEn))
-            {
-                throw new ArgumentException("English name cannot be null or empty", nameof(nameEn));
-            }
-
-            NameAr = nameAr;
-            NameEn = nameEn;
+            Name = name;
         }
     }
 }

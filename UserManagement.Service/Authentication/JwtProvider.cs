@@ -53,7 +53,7 @@ internal sealed class JwtProvider : IJwtProvider
             (var rolePermissions, int count) = _rolePermissionRepo
                     .GetWithSpec(new GetRolePermissionByRoleIdSpecification((long)user.RoleId!));
 
-            claims.AddRange(rolePermissions.ToList().Select(rp => new Claim("Permissions", rp.Permission!.NameEn)));
+            claims.AddRange(rolePermissions.ToList().Select(rp => new Claim("Permissions", rp.Permission!.Name)));
         }
 
         var dict = JwtSecurityTokenHandler.DefaultInboundClaimTypeMap;

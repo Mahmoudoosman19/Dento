@@ -15,10 +15,11 @@ namespace Case.Domain.Entities
         public Guid? DesignertId { get; private set; }
         public DateTime CreatedOnUtc { get; set; } = DateTime.Now;
         public DateTime? ModifiedOnUtc { get; set; }
-        public long StatusId { get; private set; }
+        public long StatusId { get; private set; } = 1;
         public DateTime DueDate { get;  private set; }
         public string? Description {  get; private set; }
         public CaseTypeEnum CaseType { get; private set; }
+        public DateTime AssignedAt { get; private set; } 
 
         public void SetCustomerId(Guid customerId)
         {
@@ -47,6 +48,10 @@ namespace Case.Domain.Entities
         public void SetDueDate(DateTime dueDate)
         {
             DueDate = dueDate;
+        }
+        public void SetAssignedAt(DateTime assignedAt)
+        {
+            AssignedAt = assignedAt;
         }
     }
 }

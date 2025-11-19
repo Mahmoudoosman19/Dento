@@ -25,6 +25,11 @@ namespace Case.Application.Features.Case.Command.AddCase
         }
         public async Task<ResponseModel> Handle(AddCaseCommand request, CancellationToken cancellationToken)
         {
+            var userPermissions = _tokenExtractor.GetPermissions();
+            if (!userPermissions.Contains("AddCase")) 
+            {
+                return ResponseModel.Failure("You do not have permission to add a case.");
+            }
             var customerId = _tokenExtractor.GetUserId();
             var newCase = new Domain.Entities.Case();
 

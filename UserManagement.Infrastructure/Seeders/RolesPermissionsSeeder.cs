@@ -132,41 +132,41 @@ namespace UserManagement.Infrastructure.Seeders
 
             var vendorPermissions = new List<RolePermissionSeederDto>
             {
-                new RolePermissionSeederDto("Vendor", "CreateProduct"),
-                new RolePermissionSeederDto("Vendor", "UpdateProduct"),
-                new RolePermissionSeederDto("Vendor", "DeleteProduct"),
-                new RolePermissionSeederDto("Vendor", "CreateCoupon"),
-                new RolePermissionSeederDto("Vendor", "GetProductDetails"),
-                new RolePermissionSeederDto("Vendor", "GetListProducts"),
-                new RolePermissionSeederDto("Vendor", "GetListCoupon"),
-                new RolePermissionSeederDto("Vendor", "CategoryListLookup"),
-                new RolePermissionSeederDto("Vendor", "GetSizes"),
-                new RolePermissionSeederDto("Vendor", "GetPointsLookup"),
-                new RolePermissionSeederDto("Vendor", "GetColorsLookup"),
-                new RolePermissionSeederDto("Vendor", "RestockProduct"),
-                new RolePermissionSeederDto("Vendor", "GetCouponDetails"),
-                new RolePermissionSeederDto("Vendor", "GetSizeGroupsLookup"),
-                new RolePermissionSeederDto("Vendor", "ToggleActivationProduct"),
-                new RolePermissionSeederDto("Vendor", "ChangePassword"),
-                new RolePermissionSeederDto("Vendor", "getCommentsProducts"),
-                 new RolePermissionSeederDto("Vendor", "DashboardCancelOrder"),
-                  new RolePermissionSeederDto("Vendor", "DashboardViewOrderDetails"),
-              //   new RolePermissionSeederDto("Vendor", "GetProductReview"),
-                  new RolePermissionSeederDto("Vendor", "VendorGetOrders"),
-                  new RolePermissionSeederDto("Vendor", "UpdateUserProfile"),
-                  new RolePermissionSeederDto("Vendor", "GetDashboardRole"),
-                  new RolePermissionSeederDto("Vendor", "VendorgGetCoupon"),
-                  new RolePermissionSeederDto("Vendor", "VendorActivation"),
-                  new RolePermissionSeederDto("Vendor", "VendorCreateCoupon"),
-                  new RolePermissionSeederDto("Vendor", "GetUserWallet"),
-                  new RolePermissionSeederDto("Vendor", "GetUserWalletTransaction"),
-                  new RolePermissionSeederDto("Vendor", "CheckIfCustomerHasAvatar"),
-                  new RolePermissionSeederDto("Vendor", "vendorgetListorderdelivered"),
-                  new RolePermissionSeederDto("Vendor", "getvendortopproduct"),
-                  new RolePermissionSeederDto("Vendor", "AdminGetOrderslist"),
-                  new RolePermissionSeederDto("Vendor", "UpdateProductReview"),
-                  new RolePermissionSeederDto("Vendor", "GetCouponDetailsByCode"),
-                  new RolePermissionSeederDto("Vendor", "AccessHome"),
+                new RolePermissionSeederDto("Designer", "CreateProduct"),
+                new RolePermissionSeederDto("Designer", "UpdateProduct"),
+                new RolePermissionSeederDto("Designer", "DeleteProduct"),
+                new RolePermissionSeederDto("Designer", "CreateCoupon"),
+                new RolePermissionSeederDto("Designer", "GetProductDetails"),
+                new RolePermissionSeederDto("Designer", "GetListProducts"),
+                new RolePermissionSeederDto("Designer", "GetListCoupon"),
+                new RolePermissionSeederDto("Designer", "CategoryListLookup"),
+                new RolePermissionSeederDto("Designer", "GetSizes"),
+                new RolePermissionSeederDto("Designer", "GetPointsLookup"),
+                new RolePermissionSeederDto("Designer", "GetColorsLookup"),
+                new RolePermissionSeederDto("Designer", "RestockProduct"),
+                new RolePermissionSeederDto("Designer", "GetCouponDetails"),
+                new RolePermissionSeederDto("Designer", "GetSizeGroupsLookup"),
+                new RolePermissionSeederDto("Designer", "ToggleActivationProduct"),
+                new RolePermissionSeederDto("Designer", "ChangePassword"),
+                new RolePermissionSeederDto("Designer", "getCommentsProducts"),
+                 new RolePermissionSeederDto("Designer", "DashboardCancelOrder"),
+                  new RolePermissionSeederDto("Designer", "DashboardViewOrderDetails"),
+              //   new RolePermissionSeederDto("Designer", "GetProductReview"),
+                  new RolePermissionSeederDto("Designer", "VendorGetOrders"),
+                  new RolePermissionSeederDto("Designer", "UpdateUserProfile"),
+                  new RolePermissionSeederDto("Designer", "GetDashboardRole"),
+                  new RolePermissionSeederDto("Designer", "VendorgGetCoupon"),
+                  new RolePermissionSeederDto("Designer", "VendorActivation"),
+                  new RolePermissionSeederDto("Designer", "VendorCreateCoupon"),
+                  new RolePermissionSeederDto("Designer", "GetUserWallet"),
+                  new RolePermissionSeederDto("Designer", "GetUserWalletTransaction"),
+                  new RolePermissionSeederDto("Designer", "CheckIfCustomerHasAvatar"),
+                  new RolePermissionSeederDto("Designer", "vendorgetListorderdelivered"),
+                  new RolePermissionSeederDto("Designer", "getvendortopproduct"),
+                  new RolePermissionSeederDto("Designer", "AdminGetOrderslist"),
+                  new RolePermissionSeederDto("Designer", "UpdateProductReview"),
+                  new RolePermissionSeederDto("Designer", "GetCouponDetailsByCode"),
+                  new RolePermissionSeederDto("Designer", "AccessHome"),
 
 
 
@@ -209,6 +209,8 @@ namespace UserManagement.Infrastructure.Seeders
                 new RolePermissionSeederDto("Customer","CheckIfCustomerHasAvatar"),
                 new RolePermissionSeederDto("Customer","UpdateProductReview"),
                 new RolePermissionSeederDto("Customer","GetCouponDetailsByCode"),
+                  new RolePermissionSeederDto("Customer", "AddCase"),
+
             };
 
             var rolesPermissionsList = new List<List<RolePermissionSeederDto>>
@@ -232,7 +234,7 @@ namespace UserManagement.Infrastructure.Seeders
                         .Select(rolePermission =>
                         {
                             var role = roles.FirstOrDefault(x => x.NameEn.Trim().ToUpper().Equals(rolePermission.RoleName.Trim().ToUpper()));
-                            var permission = permissions.FirstOrDefault(x => x.NameEn.Trim().ToUpper().Equals(rolePermission.PermissionName.Trim().ToUpper()));
+                            var permission = permissions.FirstOrDefault(x => x.Name.Trim().ToUpper().Equals(rolePermission.PermissionName.Trim().ToUpper()));
                             return new { role, permission };
                         })
                         .Where(x => x.role != null && x.permission != null)

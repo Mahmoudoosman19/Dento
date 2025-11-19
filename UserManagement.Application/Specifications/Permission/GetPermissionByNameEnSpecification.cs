@@ -6,7 +6,7 @@ namespace UserManagement.Application.Specifications.Permission
     {
         public GetPermissionByNameEnSpecification(string nameEn)
         {
-            AddCriteria(x => x.NameEn.Trim().ToUpper().Equals(nameEn.Trim().ToUpper()));
+            AddCriteria(x => x.Name.Trim().ToUpper().Equals(nameEn.Trim().ToUpper()));
         }
     }
 }
