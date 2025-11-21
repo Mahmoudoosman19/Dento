@@ -1,4 +1,5 @@
 ﻿using Case.Application.Features.Case.Query.GetCases;
+using Case.Application.Features.Case.Query.GetCasesByStatusId;
 using Common.Domain.Specification;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,10 @@ namespace Case.Application.Specifications
         public GetCasesSpecifications(GetCasesQuery request)
         {
             ApplyPaging(request.PageSize, request.PageIndex);
+        }
+        public GetCasesSpecifications(GetCasesByStatusIdQuery request)
+        {
+            AddCriteria(c => c.StatusId == request.StatusId);
         }
     }
 }

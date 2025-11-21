@@ -1,4 +1,6 @@
-﻿using Case.Infrastructure.Data;
+﻿using Case.Application;
+using Case.Infrastructure;
+using Case.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +21,11 @@ namespace Case.Presentation
             // DbContext
             services.AddDbContext<CaseDbContext>(options =>
                  options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
+            // Layers Dependencies
+            services.AddCaseInfrastructureStrapping();
+            services.AddCaseApplicationStrapping();
+
             return services;
         }
     }

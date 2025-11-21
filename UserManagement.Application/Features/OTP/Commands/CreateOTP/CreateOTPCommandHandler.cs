@@ -12,15 +12,13 @@ namespace UserManagement.Application.Features.OTP.Commands.CreateOTP
     internal class CreateOTPCommandHandler : ICommandHandler<CreateOTPCommand>
     {
         private readonly OTPOptions _otpOptions;
-        private readonly IGenericRepository<Domain.Entities.User> _userRepo;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IEmailService _emailService;
 
-        public CreateOTPCommandHandler(IOptions<OTPOptions> otpOptions, IGenericRepository<Domain.Entities.User> userRepo,
+        public CreateOTPCommandHandler(IOptions<OTPOptions> otpOptions,
                                        IUnitOfWork unitOfWork,
                                        IEmailService emailService)
         {
-            _userRepo = userRepo;
             _unitOfWork = unitOfWork;
             _emailService = emailService;
             _otpOptions = otpOptions.Value;
@@ -49,9 +47,9 @@ namespace UserManagement.Application.Features.OTP.Commands.CreateOTP
             await _unitOfWork.CompleteAsync(cancellationToken);
 
             // Send Email
-            //_emailService.SendEmail(user.Email!,
-            //                        "OTP for Reset Password",
-            //                        $"OTP is {otp.Code}");
+            await _emailService.SendEmail(user.Email!,
+                                    "OTP for Reset Password",
+                                    $"OTP is {otp.Code}");
 
             return ResponseModel.Success(new CreateOtpResponse() { OTP = otp, UserId = user.Id, Email = user.Email! });
             // return ResponseModel.Success(Messages.SuccessfulOperation);

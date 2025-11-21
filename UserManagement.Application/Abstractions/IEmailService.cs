@@ -1,4 +1,5 @@
-﻿using UserManagement.Domain.Entities;
+﻿using Common.Domain.Shared;
+using UserManagement.Domain.Entities;
 
 namespace UserManagement.Application.Abstractions
 {
@@ -6,7 +7,7 @@ namespace UserManagement.Application.Abstractions
     {
         Task SendWelcomeEmailAsync(User user, CancellationToken cancellationToken = default);
 
-        void SendEmail(string email, string subject, string body);
+        Task<ResponseModel> SendEmail(string email, string subject, string body);
 
     }
 }

@@ -16,7 +16,7 @@ namespace UserManagement.Presentation.Extensions
 {
     public static class UserDependencies
     {
-        public static IServiceCollection AddUserSevice (this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddUserIdentitySevice (this IServiceCollection services, IConfiguration configuration)
         {
             // DbContext
             services.AddDbContext<UserDbContext>(options =>
