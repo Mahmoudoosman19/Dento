@@ -43,6 +43,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Case.Presentation", "Case.P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Case.Service", "Case.Service\Case.Service.csproj", "{264FB33C-AA00-4400-9925-102C29710531}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileService", "FileService\FileService.csproj", "{3E564FB9-6D76-4E0A-B7AA-B2C2141B667F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -113,6 +115,10 @@ Global
 		{264FB33C-AA00-4400-9925-102C29710531}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{264FB33C-AA00-4400-9925-102C29710531}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{264FB33C-AA00-4400-9925-102C29710531}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E564FB9-6D76-4E0A-B7AA-B2C2141B667F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E564FB9-6D76-4E0A-B7AA-B2C2141B667F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E564FB9-6D76-4E0A-B7AA-B2C2141B667F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E564FB9-6D76-4E0A-B7AA-B2C2141B667F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -136,6 +142,7 @@ Global
 		{D1B767A8-CA57-433E-8470-3590060759A5} = {67439C35-85E5-473A-97AE-2284FDC18F90}
 		{54C24E76-CAF2-43E9-B1F5-348F8A31B779} = {67439C35-85E5-473A-97AE-2284FDC18F90}
 		{264FB33C-AA00-4400-9925-102C29710531} = {67439C35-85E5-473A-97AE-2284FDC18F90}
+		{3E564FB9-6D76-4E0A-B7AA-B2C2141B667F} = {A081FBEE-F4A4-4C3D-87AC-5CD4CA46DA1A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C44460DC-CA52-41A1-84DB-A38FC9BDEBFB}

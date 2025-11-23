@@ -48,7 +48,7 @@ namespace DentalDesign.API
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
-
+            app.UseStaticFiles();
             #region Configure Kestrel Middlewares
 
             // Configure the HTTP request pipeline.
