@@ -1,0 +1,72 @@
+﻿@using UserManagement.Domain.Entities
+@model List<UserManagement.Application.DTOs.UserDto>
+@{
+    ViewBag.Title = "Supervisors";
+}
+
+<h2>Supervisors</h2>
+
+<form method="get" action="@Url.Action("Index")" class="mb-3">
+    <input type="text" name="search" value="@ViewBag.Search" placeholder="Search..." class="form-control" style="width:200px; display:inline-block;" />
+    <button type="submit" class="btn btn-primary">Search</button>
+    <a href="@Url.Action("Create")" class="btn btn-success">Add Supervisor</a>
+    <button type="submit" formaction="@Url.Action("DeleteSelected")" formmethod="post" class="btn btn-danger">Delete Selected</button>
+</form>
+
+<form method="post" id="deleteForm">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th><input type="checkbox" id="selectAll" /></th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Account Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var sup in Model)
+            {
+                <tr>
+                    <td><input type="checkbox" name="selectedIds" value="@sup.Id" /></td>
+                    <td>@sup.FullNameEn</td>
+                    <td>@sup.Email</td>
+                    <td>@sup.PhoneNumber</td>
+                    <td>@sup.Status</td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                ...
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="@Url.Action("Edit", new { id = sup.Id })">Edit</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("Delete", new { id = sup.Id })">Delete</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("AddDesigner", new { supervisorId = sup.Id })">Add Designer</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("Block", new { id = sup.Id })">Block</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
+
+<nav>
+    <ul class="pagination">
+        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                <a class="page-link" href="@Url.Action("Index", new { page = i, search = ViewBag.Search })">@i</a>
+            </li>
+        }
+    </ul>
+</nav>
+
+<script>
+    document.getElementById("selectAll").addEventListener("change", function() {
+        let checkboxes = document.querySelectorAll('input[name="selectedIds"]');
+        checkboxes.forEach(cb => cb.checked = this.checked);
+    });
+</script>

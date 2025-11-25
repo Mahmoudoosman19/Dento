@@ -1,6 +1,7 @@
 ﻿using Case.Application.Specifications;
 using Common.Application.Abstractions.Messaging;
 using Common.Domain.Shared;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace Case.Application.Features.Case.Query.GetCasesByStatusId
 {
-    internal class GetCasesByStatusIdQueryHandler : IQueryHandler<GetCasesByStatusIdQuery>
+    internal class GetCasesByStatusIdQueryHandler : IQueryHandler<GetCasesByStatusIdQuery, IReadOnlyList<Domain.Entities.Case>>
     {
-        public Task<ResponseModel> Handle(GetCasesByStatusIdQuery request, CancellationToken cancellationToken)
-        {
-            var spec = new GetCasesSpecifications(request);
+        
 
+        Task<ResponseModel<IReadOnlyList<Domain.Entities.Case>>> IRequestHandler<GetCasesByStatusIdQuery, ResponseModel<IReadOnlyList<Domain.Entities.Case>>>.Handle(GetCasesByStatusIdQuery request, CancellationToken cancellationToken)
+        {
             throw new NotImplementedException();
         }
     }

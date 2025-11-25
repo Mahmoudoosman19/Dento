@@ -39,7 +39,7 @@ internal abstract class BaseExternalLogin
         user.SetStatus(UserStatus.MissingData);
         user.SetGender(UserGender.NotSet);
         user.AssignRole((long)Roles.Customer);
-        user.SetAppleId(appleId);
+        //user.SetAppleId(appleId);
 
         return user;
     }

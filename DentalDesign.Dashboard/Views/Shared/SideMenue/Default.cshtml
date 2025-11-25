@@ -1,0 +1,14 @@
+﻿@using UserManagement.Application.Identity;
+@using UserManagement.Domain.Entities;
+
+@inject CustomUserManager userManager;
+@{
+    var userId = Context.Session.GetString("UserId");
+    var user = await userManager.FindByIdAsync(userId!);
+}
+
+@{
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? string.Empty;
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString() ?? string.Empty;
+}
+

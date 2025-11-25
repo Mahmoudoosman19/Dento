@@ -16,7 +16,7 @@ namespace UserManagement.Domain.Entities
         #region Props
         public string? FullNameEn { get; private set; }
         public string? FullNameAr { get; private set; }
-        public string? AppleId { get; private set; }
+        //public string? AppleId { get; private set; }
         public UserStatus Status { get; private set; }
         public long? RoleId { get; private set; }
 
@@ -91,10 +91,10 @@ namespace UserManagement.Domain.Entities
             RoleId = roleId;
         }
 
-        public void SetAppleId(string? appleId)
-        {
-            AppleId = appleId;
-        }
+        //public void SetAppleId(string? appleId)
+        //{
+        //    AppleId = appleId;
+        //}
 
         public void AssignRole(Role role)
         {

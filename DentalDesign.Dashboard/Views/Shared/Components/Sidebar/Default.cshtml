@@ -1,0 +1,140 @@
+﻿<style>
+    .sidebar-wrapper {
+        width: 260px;
+        background: #ffffff;
+        height: 100vh;
+        padding-top: 0;
+        overflow-y: auto;
+        border-right: 1px solid #eee;
+    }
+
+    /* Profile section */
+    .sidebar-profile {
+        text-align: center;
+        padding: 25px 10px;
+        background: #fff;
+        color: #333;
+        border-bottom: 1px solid #eee;
+    }
+
+        .sidebar-profile .profile-img {
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            border: 3px solid #eee;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-profile .profile-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+    /* Menu */
+    .sidebar-menu {
+        list-style: none;
+        padding: 20px 0;
+        margin: 0;
+    }
+
+        .sidebar-menu li {
+            position: relative;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: #333;
+            text-decoration: none;
+            font-size: 15px;
+            transition: 0.3s ease;
+        }
+
+            .sidebar-menu a:hover,
+            .sidebar-menu .active > a {
+                background: #e3f7fa;
+                color: #13c4c4;
+                border-radius: 30px;
+                margin: 5px 10px;
+            }
+
+        .sidebar-menu .icon {
+            font-size: 18px;
+            width: 30px;
+        }
+
+    .pro-badge {
+        background: #e6f7ff;
+        color: #0099ff;
+        border-radius: 20px;
+        padding: 3px 10px;
+        font-size: 12px;
+        margin-left: auto;
+    }
+
+
+</style>
+
+
+<div class="sidebar-wrapper">
+
+    <!-- Profile Section -->
+    <div class="sidebar-profile">
+        <img src="https://i.pravatar.cc/100" class="profile-img" />
+        <div class="profile-name">Mahmoud Osman</div>
+    </div>
+
+    <ul class="sidebar-menu">
+        <li class="active">
+            <a href="#">
+                @* <span class="icon">📊</span> *@
+                Dashboard
+            </a>
+        </li>
+
+        <li>
+            <a asp-controller="Supervisor" asp-action="Index" class="nav-link">
+                @* <span class="icon">👁‍🗨</span> *@
+                Supervisor
+                @* <span class="pro-badge">Pro</span> *@
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                @* <span class="icon">✳️</span> *@
+                Designer
+                @* <span class="pro-badge">Pro</span> *@
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                @* <span class="icon">📦</span> *@
+                Customer
+                @* <span class="pro-badge">Pro</span> *@
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                @* <span class="icon">🏢</span> *@
+                Task
+                @* <span class="pro-badge">Pro</span> *@
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                @* <span class="icon">🏢</span> *@
+                Case
+                @* <span class="pro-badge">Pro</span> *@
+            </a>
+        </li>
+
+       
+
+    </ul>
+</div>
+
