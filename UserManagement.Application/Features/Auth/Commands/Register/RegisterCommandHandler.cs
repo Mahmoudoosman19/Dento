@@ -13,7 +13,7 @@ namespace UserManagement.Application.Features.Auth.Commands.Register
             _registerFactory = registerFactory;
         }
         public async Task<ResponseModel> Handle(RegisterCommand request, CancellationToken cancellationToken)
-        {
+         {
             var register = _registerFactory.Register(request.Type);
 
             return await register.Register(request);

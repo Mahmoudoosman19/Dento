@@ -1,9 +1,9 @@
 ﻿@model List<UserManagement.Application.DTOs.UserDto>
 @{
-    ViewBag.Title = "Supervisors";
+    ViewBag.Title = "Customers";
 }
 
-<h2>Supervisors</h2>
+<h2>Customers</h2>
 
 <!-- ====================== SEARCH FORM (GET) ====================== -->
 <form method="get" asp-action="Index" class="mb-3 d-flex gap-2">
@@ -15,17 +15,8 @@
            style="width:200px;" />
 
     <button type="submit" class="btn btn-primary">Search</button>
-
-    <a asp-controller="Supervisor" asp-action="Create" class="btn btn-success">
-        Add Supervisor
-    </a>
 </form>
 
-@* <form method="get" class="mb-3">
-    <input type="text" name="search" value="@ViewBag.Search" placeholder="Search..." class="form-control" style="width:200px; display:inline-block;" />
-    <button type="submit" class="btn btn-primary">Search</button>
-    <a asp-controller="Supervisor" asp-action="Create" class="btn btn-success">Add Supervisor</a>
-</form> *@
 
 <form method="post" asp-action="DeleteSelected">
     <button type="submit" class="btn btn-danger mb-2" onclick="openDeleteSelected()">Delete Selected</button>
@@ -43,36 +34,34 @@
         </thead>
 
         <tbody>
-            @foreach (var sup in Model)
+            @foreach (var cust in Model)
             {
                 <tr>
-                    <td><input type="checkbox" name="selectedIds" value="@sup.Id" /></td>
-                    <td>@sup.FullNameEn</td>
-                    <td>@sup.UserName</td>
-                    <td>@sup.Email</td>
-                    <td>@sup.PhoneNumber</td>
-                    <td>@sup.Status</td>
+                    <td><input type="checkbox" name="selectedIds" value="@cust.Id" /></td>
+                    <td>@cust.FullNameEn</td>
+                    <td>@cust.UserName</td>
+                    <td>@cust.Email</td>
+                    <td>@cust.PhoneNumber</td>
+                    <td>@cust.Status</td>
                     <td>
                         <div class="dropdown">
                             <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">...</button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" asp-controller="Supervisor" asp-action="Edit" asp-route-id="@sup.Id">Edit</a></li>
-                                @* <li><a class="dropdown-item" asp-controller="Supervisor" asp-action="Delete" asp-route-id="@sup.Id">Delete</a></li> *@
+                               
                                 <!-- Delete (POST) -->
                                 <li>
-                                    <form asp-controller="Supervisor" asp-action="Delete" method="post">
-                                        <input type="hidden" name="id" value="@sup.Id" />
+                                    <form asp-controller="Customer" asp-action="Delete" method="post">
+                                        <input type="hidden" name="id" value="@cust.Id" />
                                         <button type="button"
                                                 class="dropdown-item text-danger"
-                                                onclick="openDeleteSingle('@sup.Id')">
+                                                onclick="openDeleteSingle('@cust.Id')">
                                             Delete
                                         </button>
 
                                     </form>
                                 </li>
-                                <li><a class="dropdown-item" asp-controller="Supervisor" asp-action="AddDesigner" asp-route-supervisorId="@sup.Id">Add Designer</a></li>
-                                <li><a class="dropdown-item" asp-controller="Supervisor" asp-action="Block" asp-route-id="@sup.Id">Block</a></li>
-                                
+                                <li><a class="dropdown-item" asp-controller="Customer" asp-action="Block" asp-route-id="@cust.Id">Block</a></li>
+
                             </ul>
                         </div>
                     </td>
@@ -133,17 +122,17 @@
     });
 </script>
 
- @* Delete Modal *@
+@* Delete Modal *@
 <script>
 
     function openDeleteSingle(id) {
 
         document.getElementById("deleteIds").value = id;
-        document.getElementById("deleteFormModal").setAttribute("action", "/Supervisor/Delete");
+        document.getElementById("deleteFormModal").setAttribute("action", "/Customer/Delete");
 
-        document.getElementById("deleteTitle").innerText = "Delete Supervisor";
+        document.getElementById("deleteTitle").innerText = "Delete Customer";
         document.getElementById("deleteMessage").innerHTML = `
-            <p class="mb-2">Are you sure you want to delete this supervisor?</p>
+            <p class="mb-2">Are you sure you want to delete this customer?</p>
             <p class="text-muted small">This action cannot be undone.</p>
         `;
 
@@ -163,11 +152,11 @@
         }
 
         document.getElementById("deleteIds").value = selected.join(",");
-        document.getElementById("deleteFormModal").setAttribute("action", "/Supervisor/DeleteSelected");
+        document.getElementById("deleteFormModal").setAttribute("action", "/Customer/DeleteSelected");
 
-        document.getElementById("deleteTitle").innerText = "Delete Selected Supervisors";
+        document.getElementById("deleteTitle").innerText = "Delete Selected customers";
         document.getElementById("deleteMessage").innerHTML = `
-            <p class="mb-2">Are you sure you want to delete <strong>${selected.length}</strong> supervisors?</p>
+            <p class="mb-2">Are you sure you want to delete <strong>${selected.length}</strong> customers?</p>
             <p class="text-muted small">This action cannot be undone.</p>
         `;
 

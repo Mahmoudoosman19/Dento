@@ -77,8 +77,22 @@
 </style>
 
 
-<div class="sidebar-wrapper">
+@{
+    var menuItems = new[]
+    {
+        new { Name = "Dashboard", Controller = "Home", Action = "Index" },
+        new { Name = "Supervisor", Controller = "Supervisor", Action = "Index" },
+        new { Name = "Designer", Controller = "Designer", Action = "Index" },
+        new { Name = "Customer", Controller = "Customer", Action = "Index" },
+        new { Name = "Task", Controller = "Task", Action = "Index" },
+        new { Name = "Case", Controller = "Case", Action = "Index" }
+    };
 
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+}
+
+<div class="sidebar-wrapper">
     <!-- Profile Section -->
     <div class="sidebar-profile">
         <img src="https://i.pravatar.cc/100" class="profile-img" />
@@ -86,55 +100,13 @@
     </div>
 
     <ul class="sidebar-menu">
-        <li class="active">
-            <a href="#">
-                @* <span class="icon">📊</span> *@
-                Dashboard
-            </a>
-        </li>
-
-        <li>
-            <a asp-controller="Supervisor" asp-action="Index" class="nav-link">
-                @* <span class="icon">👁‍🗨</span> *@
-                Supervisor
-                @* <span class="pro-badge">Pro</span> *@
-            </a>
-        </li>
-
-        <li>
-            <a href="#">
-                @* <span class="icon">✳️</span> *@
-                Designer
-                @* <span class="pro-badge">Pro</span> *@
-            </a>
-        </li>
-
-        <li>
-            <a href="#">
-                @* <span class="icon">📦</span> *@
-                Customer
-                @* <span class="pro-badge">Pro</span> *@
-            </a>
-        </li>
-
-        <li>
-            <a href="#">
-                @* <span class="icon">🏢</span> *@
-                Task
-                @* <span class="pro-badge">Pro</span> *@
-            </a>
-        </li>
-
-        <li>
-            <a href="#">
-                @* <span class="icon">🏢</span> *@
-                Case
-                @* <span class="pro-badge">Pro</span> *@
-            </a>
-        </li>
-
-       
-
+        @foreach (var item in menuItems)
+        {
+            var isActive = item.Controller == currentController ? "active" : "";
+            <li class="@isActive">
+                <a asp-controller="@item.Controller" asp-action="@item.Action">@item.Name</a>
+            </li>
+        }
     </ul>
 </div>
 

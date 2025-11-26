@@ -4,7 +4,7 @@ using UserManagement.Domain.Enums;
 
 namespace UserManagement.Application.Features.Designer.Queries.GetListDesigners
 {
-    public class GetListDesignersQuery : IQuery<IReadOnlyList<DesignerDto>>
+    public class GetListDesignersQuery : IQuery<IReadOnlyList<UserDto>>
     {
         public string? Name { get; set; }
         public int PageSize { get; set; } = 20;

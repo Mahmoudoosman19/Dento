@@ -1,32 +1,28 @@
-﻿using Common.Application.Abstractions.Messaging;
-using Common.Domain.Shared;
-using DentalDesign.Dashboard.Models.User;
+﻿using DentalDesign.Dashboard.Models.User;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using UserManagement.Application.DTOs;
 using UserManagement.Application.Features.Auth.Commands.Register;
 using UserManagement.Application.Features.Auth.Commands.Register.Abstract;
 using UserManagement.Application.Features.Auth.Commands.Register.DTOs;
+using UserManagement.Application.Features.Designer.Queries.GetListDesigners;
 using UserManagement.Application.Features.Supervisor.Queries.GetSupervisorByNameAndStatusAndRoleId;
 using UserManagement.Application.Features.User.Commands.DeleteUser;
 using UserManagement.Application.Features.User.Commands.UpdateUser;
 using UserManagement.Application.Features.User.Queries.GetUserData;
-using UserManagement.Domain.Entities;
-using UserManagement.Domain.Enums;
-using UserManagement.Infrastructure.Data;
 
 namespace DentalDesign.Dashboard.Controllers
 {
-    public class SupervisorController : Controller
+    public class DesignerController : Controller
     {
         private readonly ISender Sender;
 
-        public SupervisorController(ISender sender)
+        public DesignerController(ISender sender)
         {
             this.Sender = sender;
         }
 
-        public async Task<IActionResult> Index(GetSupervisorByNameAndStatusAndRoleIdQuery query)
+        public async Task<IActionResult> Index(GetListDesignersQuery query)
         {
 
             var response = await Sender.Send(query);
@@ -59,7 +55,7 @@ namespace DentalDesign.Dashboard.Controllers
                 return View(model);
 
             // تحويل ViewModel لـ DTO
-            var supervisorDto = new SupervisorRegisterDto
+            var designerDto = new DesignerRegisterDto
             {
                 UserName = model.UserName,
                 FullNameEn = model.FullNameEn,
@@ -71,7 +67,7 @@ namespace DentalDesign.Dashboard.Controllers
                 Gender = model.Gender
             };
 
-            var command = new RegisterCommand(supervisorDto, RegisterType.Supervisor);
+            var command = new RegisterCommand(designerDto, RegisterType.Designer);
 
             var result = await Sender.Send(command);
 
@@ -85,7 +81,7 @@ namespace DentalDesign.Dashboard.Controllers
         }
 
 
-        // GET: /Supervisor/Edit/{id}
+        // GET: /designer/Edit/{id}
         public async Task<IActionResult> Edit(Guid id)
         {
             var query = new GetUserDataQuery { Id = id };
@@ -170,8 +166,5 @@ namespace DentalDesign.Dashboard.Controllers
 
             return RedirectToAction("Index");
         }
-
-
-
     }
 }
