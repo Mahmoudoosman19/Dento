@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UserManagement.API.Configurations;
+using UserManagement.Presentation.Configurations;
 using UserManagement.API.OptionsSetup;
 using UserManagement.Application;
 using UserManagement.Application.Abstractions;
@@ -32,7 +32,7 @@ namespace UserManagement.Presentation
             services.AddUserServiceStrapping(configuration); //Service Layer
 
             // Other Extensions and services
-            services.AddAppServicesDIConfig();
+            services.AddUserServicesDIConfig();
             services.AddDBSeederExtension();
             services.AddUserIdentitySevice(configuration);
             return services;

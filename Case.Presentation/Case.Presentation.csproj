@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Scrutor" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Case.Service\Case.Service.csproj" />
     <ProjectReference Include="..\Common.Presentation\Common.Presentation.csproj" />
   </ItemGroup>

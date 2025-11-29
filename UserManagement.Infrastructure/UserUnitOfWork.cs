@@ -28,7 +28,7 @@ internal sealed class UserUnitOfWork: IUnitOfWork
 
         if (!_repositories.ContainsKey(type))
         {
-            var repository = new GenericRepository<TEntity>(_context);
+            var repository = new UserGenericRepository<TEntity>(_context);
             _repositories.Add(type, repository);
         }
 

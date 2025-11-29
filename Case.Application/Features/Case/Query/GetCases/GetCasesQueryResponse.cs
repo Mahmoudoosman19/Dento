@@ -18,7 +18,7 @@ namespace Case.Application.Features.Case.Query.GetCases
         public long StatusId { get; set; }
         public DateTime DueDate { get; set; }
         public string? Description { get; set; }
-        public CaseTypeEnum CaseType { get; set; }
+        public long CaseType { get; set; }
         public DateTime AssignedAt { get; set; }
 
     }

@@ -29,7 +29,7 @@ internal sealed class CaseUnitOfWork : ICaseUnitOfWork
 
         if (!_repositories.ContainsKey(type))
         {
-            var repository = new GenericRepository<TEntity>(_context);
+            var repository = new CaseGenericRepository<TEntity>(_context);
             _repositories.Add(type, repository);
         }
 

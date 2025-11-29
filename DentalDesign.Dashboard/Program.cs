@@ -3,6 +3,7 @@ using System.Net.NetworkInformation;
 using UserManagement.Application;
 using UserManagement.Presentation;
 using IdentityHelper.BI;
+using Case.Presentation;
 
 
 namespace DentalDesign.Dashboard
@@ -17,8 +18,12 @@ namespace DentalDesign.Dashboard
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddHttpClient();
 
+            // Add Case Strapping
+            builder.Services.AddCasePresentationStrapping(builder.Configuration);
+
             // Add User Strapping
             builder.Services.AddUserPresentationStrapping(builder.Configuration);
+
 
             // Identity & Authentication Services
             builder.Services.AddIdentityHelper();

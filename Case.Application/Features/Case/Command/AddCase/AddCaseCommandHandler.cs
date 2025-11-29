@@ -25,6 +25,8 @@ namespace Case.Application.Features.Case.Command.AddCase
         }
         public async Task<ResponseModel> Handle(AddCaseCommand request, CancellationToken cancellationToken)
         {
+            if (!_tokenExtractor.IsUserAuthenticated())
+                return ResponseModel.Failure("User Is Not Authenticated!");
             var userPermissions = _tokenExtractor.GetPermissions();
             if (!userPermissions.Contains("AddCase")) 
             {

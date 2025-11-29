@@ -11,5 +11,8 @@ namespace Case.Application.Features.Case.Query.GetCases
     {
         public int PageSize { get; set; } = 20;
         public int PageIndex { get; set; } = 1;
+        public Guid? DesignerId { get; set; }
+        public Guid? CustomerId { get; set; }
+
     }
 }

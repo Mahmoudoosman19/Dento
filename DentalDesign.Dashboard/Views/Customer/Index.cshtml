@@ -38,7 +38,13 @@
             {
                 <tr>
                     <td><input type="checkbox" name="selectedIds" value="@cust.Id" /></td>
-                    <td>@cust.FullNameEn</td>
+                    <td>
+                        <a asp-controller="Customer"
+                           asp-action="Details"
+                           asp-route-id="@cust.Id">
+                            @cust.FullNameEn
+                        </a>
+                    </td>
                     <td>@cust.UserName</td>
                     <td>@cust.Email</td>
                     <td>@cust.PhoneNumber</td>

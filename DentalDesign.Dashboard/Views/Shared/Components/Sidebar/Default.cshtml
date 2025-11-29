@@ -1,10 +1,13 @@
 ﻿<style>
     .sidebar-wrapper {
         width: 260px;
-        background: #ffffff;
-        height: 100vh;
-        padding-top: 0;
+        /* position: fixed; */
+        left: 0;
+        height: calc(100vh - 56px);
+        background: #fff;
         overflow-y: auto;
+        z-index: 1000;
+        transition: transform 0.3s ease;
         border-right: 1px solid #eee;
     }
 
@@ -23,6 +26,7 @@
             border-radius: 50%;
             border: 3px solid #eee;
             margin-bottom: 10px;
+            object-fit: cover;
         }
 
         .sidebar-profile .profile-name {
@@ -73,40 +77,76 @@
         margin-left: auto;
     }
 
+    /* Responsive: Mobile */
+    @@media (max-width: 991.98px) {
+        .sidebar-wrapper {
+            transform: translateX(-100%);
+        }
 
+        .sidebar-wrapper.show {
+            transform: translateX(0);
+        }
+    }
+
+    @@media (max-width: 767.98px) {
+        .sidebar-wrapper {
+            position: absolute;
+            z-index: 1000;
+            height: calc(100vh - 56px);
+            overflow-y:auto;
+            left: -260px; 
+            transition: left 0.3s ease;
+        }
+
+            .sidebar-wrapper.show {
+                left: 0; /* يظهر */
+            }
+    }
+    /* Main content margin (يُتحكم من الـ Layout أو external CSS) */
 </style>
 
-
-@{
-    var menuItems = new[]
-    {
-        new { Name = "Dashboard", Controller = "Home", Action = "Index" },
-        new { Name = "Supervisor", Controller = "Supervisor", Action = "Index" },
-        new { Name = "Designer", Controller = "Designer", Action = "Index" },
-        new { Name = "Customer", Controller = "Customer", Action = "Index" },
-        new { Name = "Task", Controller = "Task", Action = "Index" },
-        new { Name = "Case", Controller = "Case", Action = "Index" }
-    };
-
-    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
-    var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
-}
-
 <div class="sidebar-wrapper">
-    <!-- Profile Section -->
     <div class="sidebar-profile">
-        <img src="https://i.pravatar.cc/100" class="profile-img" />
+        <img src="https://i.pravatar.cc/100" class="profile-img" alt="Profile" />
         <div class="profile-name">Mahmoud Osman</div>
     </div>
 
     <ul class="sidebar-menu">
+        @{
+            var menuItems = new[]
+            {
+                new { Name = "Dashboard", Controller = "Home", Action = "Index" },
+                new { Name = "Supervisor", Controller = "Supervisor", Action = "Index" },
+                new { Name = "Designer", Controller = "Designer", Action = "Index" },
+                new { Name = "Customer", Controller = "Customer", Action = "Index" },
+                new { Name = "Task", Controller = "Task", Action = "Index" },
+                new { Name = "Case", Controller = "Case", Action = "Index" }
+                };
+
+            var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+        }
+
         @foreach (var item in menuItems)
         {
             var isActive = item.Controller == currentController ? "active" : "";
             <li class="@isActive">
-                <a asp-controller="@item.Controller" asp-action="@item.Action">@item.Name</a>
+                <a asp-controller="@item.Controller" asp-action="@item.Action">
+                    @item.Name
+                </a>
             </li>
         }
     </ul>
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const toggleBtn = document.getElementById('toggleSidebar');
+        const sidebar = document.querySelector('.sidebar-wrapper');
+
+        if (toggleBtn && sidebar) {
+            toggleBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('show');
+            });
+        }
+    });
+</script>

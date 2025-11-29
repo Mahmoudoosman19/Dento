@@ -2,13 +2,15 @@
 
 namespace UserManagement.Application.Specifications.Designer
 {
-    internal class GetDesignerWithUserByIdSpecification : Specification<Domain.Entities.Designer>
+    internal class GetDesignerWithUserByIdSpecification : Specification<Domain.Entities.User>
     {
-        public GetDesignerWithUserByIdSpecification(Guid id)
+        public GetDesignerWithUserByIdSpecification(Guid id,long roleId)
         {
-            AddCriteria(x => x.Id == id || x.User.Id == id);
+            AddCriteria(c => c.RoleId == roleId);
+            AddCriteria(x => x.Id == id || x.Id == id);
 
-            AddInclude($"{nameof(Domain.Entities.Designer.User)}");
+            AddInclude($"{nameof(Domain.Entities.User)}");
+
         }
     }
 }
