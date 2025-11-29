@@ -16,7 +16,7 @@ namespace Case.Infrastructure
     {
         public static IServiceCollection AddCaseInfrastructureStrapping(this IServiceCollection services)
         {
-            services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>));
+            services.AddScoped(typeof(IGenericRepository<>),typeof(Case.Infrastructure.Repositories.CaseGenericRepository<>));
             services.AddScoped<ICaseUnitOfWork, CaseUnitOfWork>();
             return services;
         }

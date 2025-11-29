@@ -1,0 +1,176 @@
+﻿@model List<DentalDesign.Dashboard.Models.Case.CaseViewModel>
+@{
+    ViewBag.Title = "Customer Cases";
+}
+
+<h2>@ViewBag.CustomerName Cases</h2>
+
+@if(Model.Count == 0)
+{
+    <h3>No Cases Requested</h3>
+}
+else
+{
+    <form>
+   
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th><input type="checkbox" id="selectAll" /></th>
+                <th>Case Name</th>
+                <th>Case Type</th>
+                <th>Description</th>
+                <th>Designer</th>
+                <th>Created At</th>
+                <th>Status</th>
+                <th>Due Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var cas in Model)
+            {
+                <tr data-id="@cas.Id">
+                    <td><input type="checkbox" name="selectedIds" value="@cas.Id" /></td>
+                    <td >@cas.CaseName</td>
+                    <td>@cas.CaseTypeName</td>
+                    <td>@cas.Description</td>
+                    <td class="designer-column">@cas.DesignerName</td>
+                    <td>@cas.CreatedOnUtc</td>
+                    <td>@cas.StatusName</td>
+                    <td>@cas.DueDate</td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">...</button>
+                            <ul class="dropdown-menu">
+
+                                <!-- Delete (POST) -->
+                                <li>
+                                    <form asp-controller="Customer" asp-action="" method="post" >
+                                        <input type="hidden" name="id" value="@cas.Id" />
+                                        <button type="button"
+                                                class="dropdown-item text-primary"
+                                                onclick="openAssignModal('@cas.Id')">
+                                            Assign Case
+                                        </button>
+
+                                    </form>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </td>
+                   
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
+}
+
+
+
+<!-- Assign Case Modal -->
+<div class="modal fade" id="assignCaseModal" tabindex="-1">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">Assign Case to Designer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <form method="post" asp-action="AssignCase" asp-controller="Customer">
+                <div class="modal-body">
+
+                    <input type="hidden" id="assignCaseId" name="CaseId" />
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Select Designer</label>
+                        <select id="designerSelect" name="DesignerId" class="form-select">
+                            <option disabled selected>Loading...</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="submitAssign()" >Assign</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- ====================== PAGINATION ====================== -->
+<nav>
+    <ul class="pagination">
+        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                <a class="page-link" asp-action="Index" asp-route-page="@i" asp-route-search="@ViewBag.Search">@i</a>
+            </li>
+        }
+    </ul>
+</nav>
+
+
+
+<script>
+             function submitAssign() {
+        let caseId = $("#assignCaseId").val();
+        let designerId = $("#designerSelect").val();
+
+        if (!designerId) {
+            alert("Please select a designer.");
+            return;
+        }
+
+        $.post("/Customer/AssignCase", {
+            CaseId: caseId,
+            DesignerId: designerId
+        }, function (result) {
+            if (result.isSuccess) {
+                $("#assignCaseModal").modal("hide");
+
+                // تحديث اسم المصمم في الصف مباشرة
+                $(`tr[data-id='${caseId}'] .designer-column`).text($("#designerSelect option:selected").text());
+
+                // أو لو رجعت الاسم من السيرفر:
+                // $(`tr[data-id='${caseId}'] .designer-column`).text(result.designerName);
+
+                // إظهار رسالة (يفضل toast بدل alert)
+                alert(result.message);
+            } else {
+                alert(result.message || "An error occurred.");
+            }
+        }).fail(function () {
+            alert("Network error. Please try again.");
+        });
+    }
+
+
+        function openAssignModal(caseId) {
+        $("#assignCaseId").val(caseId);
+
+        $.get("/Customer/GetDesigners", function (data) {
+
+            let dropdown = $("#designerSelect");
+            dropdown.empty();
+
+            data.forEach(function (designer) {
+                dropdown.append(`<option value="${designer.id}">${designer.fullName}</option>`);
+            });
+
+            $("#assignCaseModal").modal("show");
+        });
+    }
+
+
+</script>

@@ -8,12 +8,12 @@ using System.Linq.Expressions;
 
 namespace Case.Infrastructure.Repositories
 {
-    internal class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
+    internal class CaseGenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
         private readonly CaseDbContext _context;
         protected DbSet<TEntity> _entity;
 
-        public GenericRepository(CaseDbContext context)
+        public CaseGenericRepository(CaseDbContext context)
         {
             _context = context;
             _entity = context.Set<TEntity>();

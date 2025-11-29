@@ -8,13 +8,13 @@ using UserManagement.Infrastructure.Data;
 
 namespace UserManagement.Infrastructure.Repositories
 {
-    internal class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class 
+    internal class UserGenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class 
     {
     
         private readonly UserDbContext _context;
         protected DbSet<TEntity> _entity;
 
-        public GenericRepository(UserDbContext context)
+        public UserGenericRepository(UserDbContext context)
         {
             _context = context;
             _entity = context.Set<TEntity>();

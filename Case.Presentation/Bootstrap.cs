@@ -1,6 +1,7 @@
 ﻿using Case.Application;
 using Case.Infrastructure;
 using Case.Infrastructure.Data;
+using Case.Presentation.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +26,8 @@ namespace Case.Presentation
             // Layers Dependencies
             services.AddCaseInfrastructureStrapping();
             services.AddCaseApplicationStrapping();
+
+            services.AddCaseServicesDIConfig();
 
             return services;
         }

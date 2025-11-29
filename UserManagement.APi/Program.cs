@@ -4,7 +4,7 @@ using Case.Presentation;
 using IdentityHelper.BI;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
-using UserManagement.API.Configurations;
+using UserManagement.Presentation.Configurations;
 using UserManagement.API.OptionsSetup;
 using UserManagement.Application;
 using UserManagement.Infrastructure;

@@ -22,7 +22,7 @@ public static class InfrastructureDependencies
 {
     public static IServiceCollection AddUserInfrastructureStrapping(this IServiceCollection services)
     {
-        services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+        services.AddScoped(typeof(IGenericRepository<>), typeof(UserManagement.Infrastructure.Repositories.UserGenericRepository<>));
         services.AddScoped<IUnitOfWork, UserUnitOfWork>();
 
         return services;
