@@ -42,7 +42,13 @@
             {
                 <tr>
                     <td><input type="checkbox" name="selectedIds" value="@des.Id" /></td>
-                    <td>@des.FullNameEn</td>
+                    <td>
+                        <a asp-controller="Designer"
+                           asp-action="Details"
+                           asp-route-id="@des.Id">
+                            @des.FullNameEn
+                        </a>
+                    </td>
                     <td>@des.UserName</td>
                     <td>@des.Email</td>
                     <td>@des.PhoneNumber</td>

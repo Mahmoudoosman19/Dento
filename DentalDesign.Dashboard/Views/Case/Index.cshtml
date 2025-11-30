@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Cases";
+}
+
+<h2>Cases</h2>
+
+<table class="table table-bordered" id="casesTable">
+    <thead>
+        <tr>
+            <th>Case</th>
+            <th>Customer</th>
+            <th>Status</th>
+            <th>Due Date</th>
+            <th>Assigned To</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="casesBody">
+        <tr><td colspan="6" class="text-center">Loading...</td></tr>
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function () {
+        loadCases();
+    });
+
+    function loadCases() {
+        $.ajax({
+            url: "/Case/GetCases",
+            type: "GET",
+            success: function (res) {
+                if (!res.isSuccess) {
+                    $("#casesBody").html(`<tr><td colspan="6">${res.message}</td></tr>`);
+                    return;
+                }
+
+                let rows = "";
+
+                res.data.forEach(c => {
+                    rows += `
+                        <tr>
+                            <td>${c.caseName}</td>
+                            <td>${c.customerId}</td>
+                            <td>${c.statusId}</td>
+                            <td>${formatDate(c.dueDate)}</td>
+                            <td>${(c.designertId ?? "Unassigned")}</td>
+                            <td>
+                                <a href="/Case/Details/${c.id}" class="btn btn-primary btn-sm">Details</a>
+                            </td>
+                        </tr>`;
+                });
+
+                $("#casesBody").html(rows);
+            }
+        });
+    }
+
+    function formatDate(dateStr) {
+        var d = new Date(dateStr);
+        return d.toLocaleDateString();
+    }
+</script>

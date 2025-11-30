@@ -1,4 +1,6 @@
-﻿using DentalDesign.Dashboard.Models.User;
+﻿using Case.Application.Features.Case.Query.GetCases;
+using DentalDesign.Dashboard.Models.Case;
+using DentalDesign.Dashboard.Models.User;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using UserManagement.Application.DTOs;
@@ -165,6 +167,47 @@ namespace DentalDesign.Dashboard.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var query = new GetCasesQuery { DesignerId = id };
+            var response = await Sender.Send(query);
+
+            var designer = await Sender.Send(new GetUserDataQuery { Id = id });
+
+            if (!response.IsSuccess)
+                return NotFound(response.Message);
+
+            var vm = new List<CaseViewModel>();
+
+            foreach (var c in response.Data)
+            {
+                string designerName = "Not Assigned";
+
+                if (c.DesignertId != null)
+                {
+                    var user = await Sender.Send(
+                        new GetUserDataQuery { Id = c.DesignertId.Value });
+
+                    designerName = user?.Data.FullNameEn ?? "Unknown";
+                }
+
+                vm.Add(new CaseViewModel
+                {
+                    Id = c.Id,
+                    CaseName = c.CaseName,
+                    DueDate = c.DueDate,
+                    CreatedOnUtc = c.CreatedOnUtc,
+                    StatusId = c.StatusId,
+                    DesignerId = c.DesignertId,
+                    DesignerName = designerName,
+                    CaseType = c.CaseType
+                });
+            }
+
+            ViewBag.DesignerName = designer.Data.FullNameEn;
+            return View(vm);
         }
     }
 }
