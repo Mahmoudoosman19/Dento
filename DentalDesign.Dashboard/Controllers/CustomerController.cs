@@ -17,13 +17,11 @@ using UserManagement.Application.Features.User.Queries.GetUserData;
 
 namespace DentalDesign.Dashboard.Controllers
 {
-    public class CustomerController : Controller
+    public class CustomerController : BaseController
     {
-        private readonly ISender Sender;
 
-        public CustomerController(ISender sender)
+        public CustomerController(ISender sender): base(sender) 
         {
-            this.Sender = sender;
         }
 
         public async Task<IActionResult> Index(GetCustomerByRoleIdQuery query)

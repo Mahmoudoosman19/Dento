@@ -15,14 +15,11 @@ using UserManagement.Application.Features.User.Queries.GetUserData;
 
 namespace DentalDesign.Dashboard.Controllers
 {
-    public class DesignerController : Controller
+    public class DesignerController : BaseController
     {
-        private readonly ISender Sender;
 
-        public DesignerController(ISender sender)
-        {
-            this.Sender = sender;
-        }
+        public DesignerController(ISender sender): base(sender) { }
+
 
         public async Task<IActionResult> Index(GetListDesignersQuery query)
         {

@@ -17,5 +17,6 @@ namespace UserManagement.Application.DTOs
         public DateTime? BirthDate { get; set; }
         public DateTime CreatedOnUtc { get; set; }
         public DateTime? ModifiedOnUtc { get; set; }
+        public long RoleId { get; set; }
     }
 }
