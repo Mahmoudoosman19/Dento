@@ -83,10 +83,11 @@
                     <li><a class="dropdown-item" href="/Account/Profile">Profile</a></li>
                     <li><a class="dropdown-item" href="/Account/Settings">Settings</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li>
-                        <form method="post" action="/Account/Logout" class="m-0">
-                            <button type="submit" class="dropdown-item">Logout</button>
-                        </form>
+                    <li class="nav-item ms-auto">
+                        <a class="nav-link text-danger" href="/Account/Logout">
+                            <i class="bi bi-box-arrow-right"></i> 
+                            Logout
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -95,3 +96,10 @@
 
     </div>
 </nav>
+
+<script>
+        document.getElementById("logoutBtn")?.addEventListener("click", () => {
+        localStorage.removeItem("token");    
+        window.location.href = "/Account/Logout"; 
+    });
+</script>

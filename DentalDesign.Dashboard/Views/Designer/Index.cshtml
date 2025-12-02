@@ -60,7 +60,7 @@
                                 <li><a class="dropdown-item" asp-controller="Designer" asp-action="Edit" asp-route-id="@des.Id">Edit</a></li>
                                 <!-- Delete (POST) -->
                                 <li>
-                                    <form asp-controller="Designer" asp-action="Delete" method="post">
+                                    <form asp-controller="Designer" asp-action="Delete"  method="post">
                                         <input type="hidden" name="id" value="@des.Id" />
                                         <button type="button"
                                                 class="dropdown-item text-danger"
@@ -102,7 +102,7 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
 
                 <form id="deleteFormModal" method="post">
-                    <input type="hidden" name="ids" id="deleteIds" />
+                    <input type="hidden" name="id" id="deleteIdInput" />
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
 
@@ -138,7 +138,7 @@
 
     function openDeleteSingle(id) {
 
-        document.getElementById("deleteIds").value = id;
+        document.getElementById("deleteIdInput").value = id;
         document.getElementById("deleteFormModal").setAttribute("action", "/Designer/Delete");
 
         document.getElementById("deleteTitle").innerText = "Delete Designer";

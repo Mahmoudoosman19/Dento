@@ -19,7 +19,7 @@ namespace UserManagement.Application.Features.Auth.Commands.Register.Validators
                 .NotEmpty().WithMessage(Messages.EmptyField)
                 .Must(IsUserNameExit).WithMessage(Messages.RedundantData);
 
-            RuleFor(x => x.FullName)
+            RuleFor(x => x.FullNameEn)
                 .NotEmpty().WithMessage(Messages.EmptyField);
 
             RuleFor(x => x.Email)

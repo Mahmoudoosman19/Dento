@@ -8,14 +8,12 @@ using UserManagement.Application.Features.User.Queries.GetUserData;
 
 namespace DentalDesign.Dashboard.Controllers
 {
-    public class CaseController : Controller
+    public class CaseController : BaseController
     {
-        private readonly ISender Sender;
         private readonly ITokenExtractor _tokenExtractor;
 
-        public CaseController(ISender sender, ITokenExtractor tokenExtractor)
+        public CaseController(ISender sender, ITokenExtractor tokenExtractor) : base(sender) 
         {
-            Sender = sender;
             _tokenExtractor = tokenExtractor;
         }
         public IActionResult Index()

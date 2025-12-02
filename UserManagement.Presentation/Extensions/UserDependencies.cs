@@ -47,7 +47,7 @@ namespace UserManagement.Presentation.Extensions
                     options.SaveToken = true;
 
                     options.TokenValidationParameters = new TokenValidationParameters()
-                {
+                    {
                     ValidateAudience = true,
                     ValidAudience = configuration["Jwt:Audience"],
                     ValidIssuer = configuration["Jwt:Issuer"],
@@ -55,24 +55,33 @@ namespace UserManagement.Presentation.Extensions
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:SecretKey"]!)),
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.Zero,
-                };
+                    };
 
                     options.Events = new JwtBearerEvents
-                {
-                    OnAuthenticationFailed = context =>
                     {
-                        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                        OnMessageReceived = context =>
                         {
-                            context.Response.Headers.Add("Token-Expired", "true");
-                            context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                            context.Response.ContentType = "application/json";
-                            var message = new { message = "access token has expired" };
-                            var json = JsonSerializer.Serialize(message);
-                            return context.Response.WriteAsync(json);
+                            var token = context.Request.Cookies["AuthToken"];
+                            if (!string.IsNullOrEmpty(token))
+                            {
+                                context.Token = token; 
+                            }
+                            return Task.CompletedTask;
+                        },
+                        OnAuthenticationFailed = context =>
+                        {
+                            if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                            {
+                                context.Response.Headers.Add("Token-Expired", "true");
+                                context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                                context.Response.ContentType = "application/json";
+                                var message = new { message = "access token has expired" };
+                                var json = JsonSerializer.Serialize(message);
+                                return context.Response.WriteAsync(json);
+                            }
+                            return Task.CompletedTask;
                         }
-                        return Task.CompletedTask;
-                    }
-                };
+                    };
                 });
 
 

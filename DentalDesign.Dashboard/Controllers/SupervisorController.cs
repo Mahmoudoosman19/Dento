@@ -17,14 +17,11 @@ using UserManagement.Infrastructure.Data;
 
 namespace DentalDesign.Dashboard.Controllers
 {
-    public class SupervisorController : Controller
+    public class SupervisorController : BaseController
     {
-        private readonly ISender Sender;
 
-        public SupervisorController(ISender sender)
-        {
-            this.Sender = sender;
-        }
+        public SupervisorController(ISender sender) : base(sender) { }
+
 
         public async Task<IActionResult> Index(GetSupervisorByNameAndStatusAndRoleIdQuery query)
         {

@@ -1,9 +1,13 @@
+using Case.Presentation;
 using Common.Application.Behaviors;
+using DentalDesign.Dashboard.Helper;
+using DentalDesign.Dashboard.Middleware;
+using IdentityHelper.BI;
+using Microsoft.AspNetCore.Authorization;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net.NetworkInformation;
 using UserManagement.Application;
 using UserManagement.Presentation;
-using IdentityHelper.BI;
-using Case.Presentation;
 
 
 namespace DentalDesign.Dashboard
@@ -14,6 +18,7 @@ namespace DentalDesign.Dashboard
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             // Common Services
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddHttpClient();
@@ -32,6 +37,18 @@ namespace DentalDesign.Dashboard
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            // Authorization
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("DynamicActionPermission", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.AddRequirements(new DynamicActionPermissionRequirement());
+                });
+            });
+            builder.Services.AddScoped<IAuthorizationHandler, DynamicActionPermissionHandler>();
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -47,11 +64,13 @@ namespace DentalDesign.Dashboard
 
             app.UseRouting();
 
+            app.UseMiddleware<ActionPermissionMiddleware>();
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Landing}/{action=Index}/{id?}");
+                pattern: "{controller=Account}/{action=Login}/{id?}");
 
             app.Run();
         }
