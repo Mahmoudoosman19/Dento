@@ -124,7 +124,11 @@ namespace DentalDesign.Dashboard.Controllers
                 Gender = response.Data.Gender
             };
 
-            return View(model);
+            // إذا كان الطلب AJAX → أعد Partial
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                return PartialView("_EditPartial", model);
+
+            return View(model); // صفحة كاملة (للوصول المباشر)
         }
 
         // POST: /Supervisor/Edit
@@ -133,8 +137,12 @@ namespace DentalDesign.Dashboard.Controllers
         public async Task<IActionResult> Edit(UserEditViewModel model)
         {
             if (!ModelState.IsValid)
+            {
+                // إذا كان AJAX → أعد الـ Partial مع الأخطاء
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                    return PartialView("_EditPartial", model);
                 return View(model);
-
+            }
 
             var updateCommand = new UpdateUserCommand
             {
@@ -153,11 +161,18 @@ namespace DentalDesign.Dashboard.Controllers
             if (!result.IsSuccess)
             {
                 ModelState.AddModelError(string.Empty, result.Message ?? "حدث خطأ أثناء التحديث");
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                    return PartialView("_EditPartial", model);
                 return View(model);
             }
 
+            // إذا كان AJAX → أعد نجاحًا (JSON أو فارغ)
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                return Json(new { isSuccess = true });
+
             return RedirectToAction("Index");
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Delete(Guid id)

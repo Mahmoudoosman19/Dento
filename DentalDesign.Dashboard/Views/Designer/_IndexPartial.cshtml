@@ -7,18 +7,18 @@
 <h2>Designers</h2>
 
 <!-- ====================== SEARCH FORM (GET) ====================== -->
-<form method="get" asp-action="Index" class="mb-3 d-flex gap-2">
+<div class="mb-3 d-flex gap-2">
     <input type="text"
+           id="searchInput"
            name="Name"
-           value="@ViewBag.Search"
+           value="@ViewBag.SearchName"
            placeholder="Search..."
            class="form-control"
-           style="width:200px;" />
+           style="width:200px;"
+           autocomplete="off" />
 
-    <button type="submit" class="btn btn-primary">Search</button>
-
-    <a href="@Url.Action("Create", "Designer")" class="btn btn-success ajax-link">Add Supervisor</a>
-</form>
+    <a href="@Url.Action("Create", "Designer")" class="btn btn-success ajax-link">Add Designer</a>
+</div>
 
 
 
@@ -38,7 +38,6 @@
             <th>User Name</th>
             <th>Email</th>
             <th>Phone Number</th>
-            <th>Account Status</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -53,19 +52,25 @@
                     <td>
                         <a asp-controller="Designer"
                            asp-action="Details"
-                           asp-route-id="@des.Id">
+                           asp-route-id="@des.Id"
+                           class="ajax-link">
+                    
                             @des.FullNameEn
                         </a>
                     </td>
                     <td>@des.UserName</td>
                     <td>@des.Email</td>
                     <td>@des.PhoneNumber</td>
-                    <td>@des.Status</td>
                     <td>
                         <div class="dropdown">
                             <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">...</button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" asp-controller="Designer" asp-action="Edit" asp-route-id="@des.Id">Edit</a></li>
+                                <li>
+                                    <a class="dropdown-item ajax-link"
+                                       href="@Url.Action("Edit", "Designer", new { id = @des.Id })">
+                                        Edit
+                                    </a>
+                                </li>
                                 <!-- Delete (POST) -->
                                 <li>
                                     <form asp-controller="Designer" asp-action="Delete" method="post">
@@ -78,7 +83,6 @@
 
                                     </form>
                                 </li>
-                                <li><a class="dropdown-item" asp-controller="Designer" asp-action="Block" asp-route-id="@des.Id">Block</a></li>
 
                             </ul>
                         </div>

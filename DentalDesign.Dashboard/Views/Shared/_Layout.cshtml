@@ -47,6 +47,9 @@
          * param {boolean} pushState - Whether to update browser history
          */
         function loadPage(url, pushState = true) {
+            const searchInput = document.getElementById("searchInput");
+            const searchValue = searchInput ? searchInput.value : '';
+            const wasFocused = searchInput === document.activeElement;
             fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
                 .then(res => {
                     if (!res.ok) throw new Error('Network response was not ok');
@@ -54,6 +57,17 @@
                 })
                 .then(html => {
                     mainContent.innerHTML = html;
+
+                    // ✅ استعد قيمة البحث والتركيز
+            const newSearchInput = document.getElementById("searchInput");
+            if (newSearchInput) {
+                newSearchInput.value = searchValue;
+                if (wasFocused) {
+                    newSearchInput.focus();
+                    // اختياري: ضع المؤشر في النهاية
+                    newSearchInput.setSelectionRange(searchValue.length, searchValue.length);
+                }
+            }
 
                     // Update sidebar active state
                     const pathname = new URL(url, window.location.origin).pathname;
@@ -65,7 +79,7 @@
                         history.pushState({ url: url }, "", url);
                     }
 
-                    // Re-bind dynamic handlers
+                    // Re-bind all dynamic handlers
                     bindDynamicEventHandlers();
                 })
                 .catch(err => {
@@ -78,7 +92,7 @@
          * Binds event handlers to dynamically loaded content
          */
         function bindDynamicEventHandlers() {
-            // .ajax-link
+            // === 1. AJAX Links (Create, Edit, Details, etc.) ===
             document.querySelectorAll(".ajax-link").forEach(link => {
                 if (!link.dataset.bound) {
                     link.addEventListener("click", function (e) {
@@ -89,20 +103,25 @@
                 }
             });
 
-            // Search form
-            const searchForm = document.querySelector('form[method="get"][asp-action="Index"]');
-            if (searchForm && !searchForm.dataset.bound) {
-                searchForm.addEventListener("submit", function (e) {
-                    e.preventDefault();
-                    const formData = new FormData(this);
-                    const queryString = new URLSearchParams(formData).toString();
-                    const url = this.action + (queryString ? '?' + queryString : '');
-                    loadPage(url);
+            // === 2. Live Search (on input) ===
+            const searchInput = document.getElementById("searchInput");
+            if (searchInput && !searchInput.dataset.bound) {
+                let searchTimeout;
+                searchInput.addEventListener("input", function () {
+                    clearTimeout(searchTimeout);
+                    const query = this.value.trim();
+                    const pathParts = window.location.pathname.split('/').filter(p => p);
+                    const controller = pathParts[0] || 'Home';
+                    const url = `/${controller}/Index?Name=${encodeURIComponent(query)}`;
+
+                    searchTimeout = setTimeout(() => {
+                        loadPage(url);
+                    }, 300);
                 });
-                searchForm.dataset.bound = "true";
+                searchInput.dataset.bound = "true";
             }
 
-            // Pagination
+            // === 3. Pagination ===
             document.querySelectorAll(".pagination .page-link").forEach(link => {
                 if (!link.dataset.bound) {
                     link.addEventListener("click", function (e) {
@@ -110,6 +129,57 @@
                         loadPage(this.href);
                     });
                     link.dataset.bound = "true";
+                }
+            });
+
+            // === 4. Edit Forms (POST) ===
+            document.querySelectorAll('form[id^="edit"][method="post"]').forEach(form => {
+                if (!form.dataset.bound) {
+                    form.addEventListener("submit", function (e) {
+                        e.preventDefault();
+
+                        const formData = new FormData(this);
+                        const url = this.action;
+                        const tokenInput = this.querySelector('input[name="__RequestVerificationToken"]');
+                        if (tokenInput) {
+                            formData.set("__RequestVerificationToken", tokenInput.value);
+                        }
+
+                        fetch(url, {
+                            method: "POST",
+                            headers: { "X-Requested-With": "XMLHttpRequest" },
+                            body: formData
+                        })
+                        .then(async res => {
+                            if (res.ok) {
+                                const contentType = res.headers.get("content-type");
+                                if (contentType?.includes("application/json")) {
+                                    const result = await res.json();
+                                    if (result?.isSuccess) {
+                                        const urlParts = new URL(url, window.location.origin).pathname.split('/').filter(p => p);
+                                        const controller = urlParts[0] || 'Home';
+                                        loadPage(`/${controller}/Index`);
+                                    } else {
+                                        throw new Error("Unexpected JSON response");
+                                    }
+                                } else {
+                                    // Handle validation errors (HTML response)
+                                    const html = await res.text();
+                                    mainContent.innerHTML = html;
+                                    bindDynamicEventHandlers();
+                                }
+                            } else {
+                                const html = await res.text();
+                                mainContent.innerHTML = html;
+                                bindDynamicEventHandlers();
+                            }
+                        })
+                        .catch(err => {
+                            console.error("Edit failed:", err);
+                            alert("Failed to save changes.");
+                        });
+                    });
+                    form.dataset.bound = "true";
                 }
             });
         }
@@ -171,13 +241,9 @@
             })
             .then(async res => {
                 if (res.ok) {
-                    // ✅ Close modal first
                     if (modal) modal.hide();
-
-                    // Reload current page via AJAX
                     loadPage(location.href, false);
                 } else {
-                    // Try to get error message from response
                     const errorMessage = await res.text().catch(() => 'Unknown error');
                     throw new Error(errorMessage || 'Delete operation failed');
                 }
@@ -185,7 +251,6 @@
             .catch(err => {
                 console.error("Delete failed:", err);
                 alert(err.message || "An error occurred during deletion.");
-                // Modal remains open on error (good UX)
             });
         }
 
@@ -193,7 +258,7 @@
         document.addEventListener("DOMContentLoaded", function () {
             mainContent = document.getElementById("mainContent");
 
-            // Sidebar links
+            // Sidebar navigation
             document.querySelectorAll(".sidebar-wrapper a").forEach(a => {
                 a.addEventListener("click", function (e) {
                     e.preventDefault();
@@ -201,12 +266,12 @@
                 });
             });
 
-            // Back/forward navigation
+            // Browser back/forward navigation
             window.addEventListener("popstate", function () {
                 loadPage(location.href, false);
             });
 
-            // Initial binding
+            // Initial binding for content loaded on first page load
             bindDynamicEventHandlers();
         });
     </script>

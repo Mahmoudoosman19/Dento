@@ -7,16 +7,16 @@
 <h2>Customers</h2>
 
 <!-- ====================== SEARCH FORM (GET) ====================== -->
-<form method="get" asp-action="Index" class="mb-3 d-flex gap-2">
+<div class="mb-3 d-flex gap-2">
     <input type="text"
+           id="searchInput"
            name="Name"
-           value="@ViewBag.Search"
+           value="@ViewBag.SearchName"
            placeholder="Search..."
            class="form-control"
-           style="width:200px;" />
-
-    <button type="submit" class="btn btn-primary">Search</button>
-</form>
+           style="width:200px;"
+           autocomplete="off" />
+</div>
 
 
 <button type="button" class="btn btn-danger mb-2" onclick="openDeleteSelected()">Delete Selected</button>

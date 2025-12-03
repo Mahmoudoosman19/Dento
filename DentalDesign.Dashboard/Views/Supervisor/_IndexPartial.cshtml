@@ -7,19 +7,18 @@
 <h2>Supervisors</h2>
 
 <!-- ====================== SEARCH FORM (GET) ====================== -->
-<form method="get" asp-action="Index" class="mb-3 d-flex gap-2">
+<div class="mb-3 d-flex gap-2">
     <input type="text"
+           id="searchInput"
            name="Name"
-           value="@ViewBag.Search"
+           value="@ViewBag.SearchName"
            placeholder="Search..."
            class="form-control"
-           style="width:200px;" />
-
-    <button type="submit" class="btn btn-primary">Search</button>
+           style="width:200px;"
+           autocomplete="off" />
 
     <a href="@Url.Action("Create", "Supervisor")" class="btn btn-success ajax-link">Add Supervisor</a>
-
-</form>
+</div>
 
 
 <button type="button" class="btn btn-danger mb-2"
@@ -59,7 +58,12 @@
                             <div class="dropdown">
                                 <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">...</button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" asp-controller="Supervisor" asp-action="Edit" asp-route-id="@sup.Id">Edit</a></li>
+                                    <li>
+                                        <a class="dropdown-item ajax-link"
+                                           href="@Url.Action("Edit", "Supervisor", new { id = @sup.Id })">
+                                            Edit
+                                        </a>
+                                    </li>
                                     @* <li><a class="dropdown-item" asp-controller="Supervisor" asp-action="Delete" asp-route-id="@sup.Id">Delete</a></li> *@
                                     <!-- Delete (POST) -->
                                     <li>

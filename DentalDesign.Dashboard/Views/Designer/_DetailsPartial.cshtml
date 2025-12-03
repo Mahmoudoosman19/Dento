@@ -1,0 +1,64 @@
+﻿@model List<DentalDesign.Dashboard.Models.Case.CaseViewModel>
+@{
+    // لا Layout هنا
+}
+
+<h2>@ViewBag.DesignerName Cases</h2>
+
+@if (Model.Count == 0)
+{
+    <h3>No Cases Assigned</h3>
+}
+else
+{
+    <form>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="selectAll" /></th>
+                    <th>Case Name</th>
+                    <th>Case Type</th>
+                    <th>Description</th>
+                    <th>Due Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var cas in Model)
+                {
+                    <tr data-id="@cas.Id">
+                        <td><input type="checkbox" name="selectedIds" value="@cas.Id" /></td>
+                        <td>@cas.CaseName</td>
+                        <td>@cas.CaseTypeName</td>
+                        <td>@cas.Description</td>
+                        <td>@cas.DueDate</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+
+    <!-- Pagination (if needed) -->
+    @if (ViewBag.TotalPages != null && ViewBag.TotalPages > 1)
+    {
+        <nav>
+            <ul class="pagination">
+                @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                {
+                    <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                        <a class="page-link ajax-link"
+                           href="@Url.Action("Details", "Designer", new { id = ViewBag.DesignerId, page = i })">
+                            @i
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    }
+}
+
+<script>
+    // ربط Select All (اختياري)
+    document.getElementById("selectAll")?.addEventListener("change", function () {
+        document.querySelectorAll('input[name="selectedIds"]').forEach(cb => cb.checked = this.checked);
+    });
+</script>

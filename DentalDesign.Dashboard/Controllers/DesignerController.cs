@@ -102,7 +102,7 @@ namespace DentalDesign.Dashboard.Controllers
         }
 
 
-        // GET: /designer/Edit/{id}
+        // GET: /Designer/Edit/{id}
         public async Task<IActionResult> Edit(Guid id)
         {
             var query = new GetUserDataQuery { Id = id };
@@ -123,17 +123,23 @@ namespace DentalDesign.Dashboard.Controllers
                 Gender = response.Data.Gender
             };
 
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                return PartialView("_EditPartial", model);
+
             return View(model);
         }
 
-        // POST: /Supervisor/Edit
+        // POST: /Designer/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(UserEditViewModel model)
         {
             if (!ModelState.IsValid)
+            {
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                    return PartialView("_EditPartial", model);
                 return View(model);
-
+            }
 
             var updateCommand = new UpdateUserCommand
             {
@@ -152,8 +158,13 @@ namespace DentalDesign.Dashboard.Controllers
             if (!result.IsSuccess)
             {
                 ModelState.AddModelError(string.Empty, result.Message ?? "حدث خطأ أثناء التحديث");
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                    return PartialView("_EditPartial", model);
                 return View(model);
             }
+
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                return Json(new { isSuccess = true });
 
             return RedirectToAction("Index");
         }
@@ -192,24 +203,19 @@ namespace DentalDesign.Dashboard.Controllers
         {
             var query = new GetCasesQuery { DesignerId = id };
             var response = await Sender.Send(query);
-
             var designer = await Sender.Send(new GetUserDataQuery { Id = id });
 
-            if (!response.IsSuccess)
-                return NotFound(response.Message);
+            if (!response.IsSuccess || designer.Data == null)
+                return NotFound();
 
             var vm = new List<CaseViewModel>();
-
             foreach (var c in response.Data)
             {
                 string designerName = "Not Assigned";
-
                 if (c.DesignertId != null)
                 {
-                    var user = await Sender.Send(
-                        new GetUserDataQuery { Id = c.DesignertId.Value });
-
-                    designerName = user?.Data.FullNameEn ?? "Unknown";
+                    var user = await Sender.Send(new GetUserDataQuery { Id = c.DesignertId.Value });
+                    designerName = user?.Data?.FullNameEn ?? "Unknown";
                 }
 
                 vm.Add(new CaseViewModel
@@ -226,7 +232,12 @@ namespace DentalDesign.Dashboard.Controllers
             }
 
             ViewBag.DesignerName = designer.Data.FullNameEn;
-            return View(vm);
+
+            
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                return PartialView("_DetailsPartial", vm);
+
+            return View(vm); // صفحة كاملة (للوصول المباشر)
         }
     }
 }
