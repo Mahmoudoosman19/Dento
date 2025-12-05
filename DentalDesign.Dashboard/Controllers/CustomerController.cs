@@ -213,6 +213,10 @@ namespace DentalDesign.Dashboard.Controllers
             }
 
             ViewBag.CustomerName = customer.Data.FullNameEn;
+
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                return PartialView("_DetailsPartial", vm);
+
             return View(vm);
         }
 

@@ -3,6 +3,7 @@ window.SpaLoader = (function () {
     let mainContent;
 
     function init() {
+
         mainContent = document.getElementById("mainContent");
         if (!mainContent) return;
 
@@ -45,6 +46,7 @@ window.SpaLoader = (function () {
 
                 // Re-bind events
                 if (window.EventBinder) window.EventBinder.bindAll();
+                document.dispatchEvent(new Event('mainContentUpdated'));
             })
             .catch(err => {
                 console.error("Load failed:", err);

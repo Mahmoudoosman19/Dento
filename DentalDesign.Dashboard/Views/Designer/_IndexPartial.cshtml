@@ -17,7 +17,11 @@
            style="width:200px;"
            autocomplete="off" />
 
-    <a href="@Url.Action("Create", "Designer")" class="btn btn-success ajax-link">Add Designer</a>
+    <a href="@Url.Action("Create", "Designer")"
+       class="btn btn-success ajax-link"
+       onclick="sessionStorage.setItem('returnUrl', location.href);">
+        Add Designer
+    </a>
 </div>
 
 

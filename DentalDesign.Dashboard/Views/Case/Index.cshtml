@@ -1,14 +1,7 @@
-﻿<div id="mainContent">
-    @await Html.PartialAsync("_IndexPartial")
-</div>
+﻿@model List<DentalDesign.Dashboard.Models.Case.CaseViewModel>
+@{
+    Layout = "_Layout";
+    ViewBag.Title = "Cases";
+}
 
-<script>
-    // تحميل الصفحة بالـ AJAX عند الضغط على links في الـ sidebar
-    function loadPage(url) {
-        fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
-            .then(res => res.text())
-            .then(html => {
-                document.getElementById("mainContent").innerHTML = html;
-            });
-    }
-</script>
+@await Html.PartialAsync("_IndexPartial", Model)

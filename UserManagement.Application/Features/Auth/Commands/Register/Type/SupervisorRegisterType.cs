@@ -30,7 +30,7 @@ namespace UserManagement.Application.Features.Auth.Commands.Register.Type
             user.SetStatus(UserStatus.Active);
 
             // Assign Role
-            var adminRole = _roleRepo.GetEntityWithSpec(new GetRoleByNameEnSpecification(Roles.SuperVisor.ToString()));
+            var adminRole = _roleRepo.GetEntityWithSpec(new GetRoleByNameEnSpecification(Roles.Supervisor.ToString()));
             user.AssignRole(adminRole!.Id);
             user.ConfirmEmail();
             user.ConfirmPhoneNumber();

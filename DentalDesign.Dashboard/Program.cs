@@ -64,6 +64,7 @@ namespace DentalDesign.Dashboard
 
             app.UseRouting();
 
+            app.UseMiddleware<TokenForwardingMiddleware>();
             app.UseMiddleware<ActionPermissionMiddleware>();
             app.UseAuthentication();
             app.UseAuthorization();

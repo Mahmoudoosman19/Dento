@@ -64,11 +64,9 @@ namespace DentalDesign.Dashboard.Controllers
             {
                 if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
                     return PartialView("_CreatePartial", model);
-
                 return View(model);
             }
 
-            // تحويل ViewModel لـ DTO
             var supervisorDto = new SupervisorRegisterDto
             {
                 UserName = model.UserName,
@@ -82,24 +80,22 @@ namespace DentalDesign.Dashboard.Controllers
             };
 
             var command = new RegisterCommand(supervisorDto, RegisterType.Supervisor);
-
             var result = await Sender.Send(command);
 
             if (!result.IsSuccess)
             {
                 ModelState.AddModelError(string.Empty, result.Message ?? "حدث خطأ أثناء التسجيل");
-
                 if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
                     return PartialView("_CreatePartial", model);
-
                 return View(model);
             }
 
-            
             if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
-                return PartialView("_IndexPartial");
+            {
+                return Json(new { isSuccess = true }); // ✅ JSON فقط
+            }
 
-            return View("Index");
+            return RedirectToAction("Index");
         }
 
 

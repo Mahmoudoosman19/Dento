@@ -1,64 +1,64 @@
-﻿@{
-    Layout = null;
-    ViewData["Title"] = "Cases";
+﻿@model List<DentalDesign.Dashboard.Models.Case.CaseViewModel>
+@{
+
 }
 
-<h2>Cases</h2>
+<h2>@ViewBag.DesignerName Cases</h2>
 
-<table class="table table-bordered" id="casesTable">
-    <thead>
-        <tr>
-            <th>Case</th>
-            <th>Customer</th>
-            <th>Status</th>
-            <th>Due Date</th>
-            <th>Assigned To</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody id="casesBody">
-        <tr><td colspan="6" class="text-center">Loading...</td></tr>
-    </tbody>
-</table>
+@if (Model.Count == 0)
+{
+    <h3>No Cases To Show</h3>
+}
+else
+{
+    <form>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Case Name</th>
+                    <th>Case Type</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Due Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var cas in Model)
+                {
+                    <tr data-id="@cas.Id">
+                        <td>@cas.CaseName</td>
+                        <td>@cas.CaseTypeName</td>
+                        <td>@cas.Description</td>
+                        <td>@cas.StatusName</td>
+                        <td>@cas.DueDate</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+
+    <!-- Pagination (if needed) -->
+    @if (ViewBag.TotalPages != null && ViewBag.TotalPages > 1)
+    {
+        <nav>
+            <ul class="pagination">
+                @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                {
+                    <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                        <a class="page-link ajax-link"
+                           href="@Url.Action("Index", "Case", new { id = ViewBag.DesignerId, page = i })">
+                            @i
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    }
+}
 
 <script>
-    $(document).ready(function () {
-        loadCases();
+    // ربط Select All (اختياري)
+    document.getElementById("selectAll")?.addEventListener("change", function () {
+        document.querySelectorAll('input[name="selectedIds"]').forEach(cb => cb.checked = this.checked);
     });
-
-    function loadCases() {
-        $.ajax({
-            url: "/Case/GetCases",
-            type: "GET",
-            success: function (res) {
-                if (!res.isSuccess) {
-                    $("#casesBody").html(`<tr><td colspan="6">${res.message}</td></tr>`);
-                    return;
-                }
-
-                let rows = "";
-
-                res.data.forEach(c => {
-                    rows += `
-                        <tr>
-                            <td>${c.caseName}</td>
-                            <td>${c.customerId}</td>
-                            <td>${c.statusId}</td>
-                            <td>${formatDate(c.dueDate)}</td>
-                            <td>${(c.designertId ?? "Unassigned")}</td>
-                            <td>
-                                <a href="/Case/Details/${c.id}" class="btn btn-primary btn-sm">Details</a>
-                            </td>
-                        </tr>`;
-                });
-
-                $("#casesBody").html(rows);
-            }
-        });
-    }
-
-    function formatDate(dateStr) {
-        var d = new Date(dateStr);
-        return d.toLocaleDateString();
-    }
 </script>

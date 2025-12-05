@@ -4,7 +4,9 @@
 
 <h2>Create Designer</h2>
 
-<form id="createDesignerForm">
+<form id="createDesignerForm" method="post" asp-action="Create" asp-controller="Designer">
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="returnUrl" value="/Designer/Index" />
     <div class="mb-3">
         <label asp-for="UserName" class="form-label"></label>
         <input asp-for="UserName" class="form-control" />
@@ -60,25 +62,3 @@
     <button type="submit" class="btn btn-primary">Create</button>
 </form>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-    <script>
-        document.getElementById("createDesignerForm")?.addEventListener("submit", function(e){
-            e.preventDefault();
-            const formData = new FormData(this);
-
-            fetch("@Url.Action("Create", "Designer")", {
-                method: "POST",
-                body: formData
-            })
-            .then(res => res.json())
-            .then(data => {
-                if(data.isSuccess){
-                    loadPage("@Url.Action("Index", "Designer")"); // عدّل حسب دالتك للـ AJAX
-                } else {
-                    alert(data.message || "Error");
-                }
-            });
-        });
-    </script>
-}

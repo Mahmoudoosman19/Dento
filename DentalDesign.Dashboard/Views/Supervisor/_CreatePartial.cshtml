@@ -4,7 +4,9 @@
 
 <h2>Create Supervisor</h2>
 
-<form id="createSupervisorForm">
+<form id="createSupervisorForm" method="post" asp-action="Create" asp-controller="Supervisor">
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="returnUrl" value="/Supervisor/Index" />
     <div class="mb-3">
         <label asp-for="UserName" class="form-label"></label>
         <input asp-for="UserName" class="form-control" />
@@ -60,25 +62,3 @@
     <button type="submit" class="btn btn-primary">Create</button>
 </form>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-    <script>
-        document.getElementById("createSupervisorForm")?.addEventListener("submit", function(e){
-            e.preventDefault();
-            const formData = new FormData(this);
-
-            fetch("@Url.Action("Create", "Supervisor")", {
-                method: "POST",
-                body: formData
-            })
-            .then(res => res.json())
-            .then(data => {
-                if(data.isSuccess){
-                    loadPage("@Url.Action("Index", "Supervisor")"); // عدّل حسب دالتك للـ AJAX
-                } else {
-                    alert(data.message || "Error");
-                }
-            });
-        });
-    </script>
-}

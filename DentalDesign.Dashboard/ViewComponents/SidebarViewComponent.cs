@@ -1,6 +1,7 @@
 ﻿using DentalDesign.Dashboard.Models.Component;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using UserManagement.Domain.Entities;
 
 namespace DentalDesign.Dashboard.ViewComponents
 {
@@ -10,12 +11,15 @@ namespace DentalDesign.Dashboard.ViewComponents
         {
              var userName = User.FindFirstValue("UserName") ?? User.Identity?.Name ?? "User";
              var fullNameEn = User.FindFirstValue("FullNameEn") ?? userName;
-             var profileImg = "https://i.pravatar.cc/100"; // أو خذها من claim إذا متوفرة
+             var profileImg = "https://i.pravatar.cc/100";
+             var role = User.FindFirstValue("Role") ?? "Guest";
 
-             var model = new SidebarViewModel
+
+            var model = new SidebarViewModel
              {
                  FullName = fullNameEn,
-                 ProfileImageUrl = profileImg
+                 ProfileImageUrl = profileImg,
+                 Role = role
              };
 
              return View(model);

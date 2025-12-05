@@ -111,10 +111,12 @@
         <img src="@Model.ProfileImageUrl" class="profile-img" alt="Profile" />
         <div class="profile-name">@Model.FullName</div>
     </div>
-
+    
     <ul class="sidebar-menu">
         @{
-            var menuItems = new[]
+            var menuByRole = new Dictionary<string, dynamic[]>
+            {
+                ["Admin"] = new dynamic[]
             {
                 new { Name = "Dashboard", Controller = "Home", Action = "Index" },
                 new { Name = "Supervisor", Controller = "Supervisor", Action = "Index" },
@@ -122,20 +124,41 @@
                 new { Name = "Customer", Controller = "Customer", Action = "Index" },
                 new { Name = "Task", Controller = "Task", Action = "Index" },
                 new { Name = "Case", Controller = "Case", Action = "Index" }
-                };
+            },
+                ["Supervisor"] = new dynamic[]
+            {
+                new { Name = "Designer", Controller = "Designer", Action = "Index" },
+                new { Name = "Case", Controller = "Case", Action = "Index" }
+            },
+                ["Designer"] = new dynamic[]
+            {
+                new { Name = "Task", Controller = "Task", Action = "Index" },
+                new { Name = "Case", Controller = "Case", Action = "Index" }
+            }
+            };
+            string? currentRole = null;
+
+            if (Model.Role == "Admin")
+                currentRole = "Admin";
+            else if (Model.Role == "Supervisor")
+                currentRole = "Supervisor";
+            else if (Model.Role == "Designer")
+                currentRole = "Designer";
 
             var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
-        }
 
-        @foreach (var item in menuItems)
-        {
-            var isActive = item.Controller == currentController ? "active" : "";
-            <li class="@isActive">
-                <a href="/@item.Controller/@item.Action" class="ajax-link" data-controller="@item.Controller">
-                    @item.Name
-                </a>
-
-            </li>
+            if (currentRole != null && menuByRole.TryGetValue(currentRole, out var menuItems))
+            {
+                foreach (var item in menuItems)
+                {
+                    var isActive = item.Controller == currentController ? "active" : "";
+                    <li class="@isActive">
+                        <a href="/@item.Controller/@item.Action" class="ajax-link">
+                            @item.Name
+                        </a>
+                    </li>
+                }
+            }
         }
     </ul>
 </div>

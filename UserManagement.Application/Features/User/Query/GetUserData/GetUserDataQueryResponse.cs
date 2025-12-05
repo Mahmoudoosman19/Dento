@@ -10,7 +10,7 @@ namespace UserManagement.Application.Features.User.Queries.GetUserData
         public string PhoneNumber { get; set; } = null!;
         public string FullNameAr { get; set; } = null!;
         public string FullNameEn { get; set; } = null!;
-        public string Role { get; set; } = null!;
+        public long RoleId { get; set; } = 0;
         public string Status { get; set; }
         public int Points { get; set; }    
         public UserGender Gender { get; set; }

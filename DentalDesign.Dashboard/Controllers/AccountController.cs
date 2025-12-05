@@ -34,7 +34,7 @@ namespace DentalDesign.Dashboard.Controllers
             {
                 HttpOnly = true,
                 Secure = true,               
-                SameSite = SameSiteMode.Strict,
+                SameSite = SameSiteMode.None,
                 Expires = DateTime.UtcNow.AddHours(3)
             });
             return Ok(new

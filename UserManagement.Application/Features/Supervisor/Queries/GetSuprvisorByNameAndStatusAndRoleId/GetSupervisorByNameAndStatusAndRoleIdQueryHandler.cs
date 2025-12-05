@@ -29,7 +29,7 @@ namespace UserManagement.Application.Features.Supervisor.Queries.GetSupervisorBy
         public Task<ResponseModel<IReadOnlyList<UserDto>>> Handle(GetSupervisorByNameAndStatusAndRoleIdQuery request,
             CancellationToken cancellationToken)
         {
-            var role = _roleRepo.GetEntityWithSpec(new GetRoleByNameEnSpecification(Roles.SuperVisor.ToString()));
+            var role = _roleRepo.GetEntityWithSpec(new GetRoleByNameEnSpecification(Roles.Supervisor.ToString()));
 
             (var supervisor, int count) =
                 _supervisorRepo.GetWithSpec(new GetSupervisorListQuerySpecification(request, role!.Id));

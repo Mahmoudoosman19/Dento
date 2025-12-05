@@ -8,7 +8,6 @@ using UserManagement.Application.Features.Auth.Commands.Register;
 using UserManagement.Application.Features.Auth.Commands.Register.Abstract;
 using UserManagement.Application.Features.Auth.Commands.Register.DTOs;
 using UserManagement.Application.Features.Designer.Queries.GetListDesigners;
-using UserManagement.Application.Features.Supervisor.Queries.GetSupervisorByNameAndStatusAndRoleId;
 using UserManagement.Application.Features.User.Commands.DeleteUser;
 using UserManagement.Application.Features.User.Commands.UpdateUser;
 using UserManagement.Application.Features.User.Queries.GetUserData;
@@ -63,11 +62,9 @@ namespace DentalDesign.Dashboard.Controllers
             {
                 if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
                     return PartialView("_CreatePartial", model);
-
                 return View(model);
             }
 
-            // تحويل ViewModel لـ DTO
             var designerDto = new DesignerRegisterDto
             {
                 UserName = model.UserName,
@@ -81,24 +78,22 @@ namespace DentalDesign.Dashboard.Controllers
             };
 
             var command = new RegisterCommand(designerDto, RegisterType.Designer);
-
             var result = await Sender.Send(command);
 
             if (!result.IsSuccess)
             {
                 ModelState.AddModelError(string.Empty, result.Message ?? "حدث خطأ أثناء التسجيل");
-
                 if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
                     return PartialView("_CreatePartial", model);
-
                 return View(model);
             }
 
-
             if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
-                return PartialView("_IndexPartial");
+            {
+                return Json(new { isSuccess = true }); 
+            }
 
-            return View("Index");
+            return RedirectToAction("Index");
         }
 
 
