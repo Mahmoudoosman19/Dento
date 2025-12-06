@@ -23,6 +23,9 @@ namespace IdentityHelper.Service
 
         public string GetUserRole()
         {
+            var claimValue = _contextAccessor.HttpContext.User.FindFirst("Role")?.Value;
+            if(claimValue is not null)
+                return claimValue;
             return GetClaim("Role");
         }
 

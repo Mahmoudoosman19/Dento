@@ -1,8 +1,4 @@
 ﻿@model List<DentalDesign.Dashboard.Models.Case.CaseViewModel>
-@{
-
-}
-
 <h2>@ViewBag.DesignerName Cases</h2>
 
 @if (Model.Count == 0)
@@ -19,18 +15,69 @@ else
                     <th>Case Type</th>
                     <th>Description</th>
                     <th>Status</th>
+                    @if (ViewBag.UserRoleId == 1 || ViewBag.UserRoleId == 2)
+                    {
+                       <th>Assigned For</th>    
+                    }
+                    <th>Assigned At</th>
                     <th>Due Date</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var cas in Model)
                 {
                     <tr data-id="@cas.Id">
-                        <td>@cas.CaseName</td>
+                        <td>
+                            <a href="@Url.Action("Details", "Case", new { id = cas.Id })"
+                               class="ajax-link">
+                                @cas.CaseName
+                            </a>
+                        </td>
                         <td>@cas.CaseTypeName</td>
                         <td>@cas.Description</td>
-                        <td>@cas.StatusName</td>
+                        <td class="status-cell">@cas.StatusName</td>
+                        @if (ViewBag.UserRoleId == 1 || ViewBag.UserRoleId == 2)
+                        {
+                            <td class="designer-cell" data-designer-id="@cas.DesignerId">
+                                @cas.DesignerName
+                            </td>
+                        }
+                        <td>@cas.AssignedAt</td>
                         <td>@cas.DueDate</td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                    Actions
+                                </button>
+
+                                <ul class="dropdown-menu">
+
+                                    <!-- Change Status -->
+                                    <li>
+                                        <a class="dropdown-item change-status-btn"
+                                           href="#"
+                                           data-id="@cas.Id"
+                                           data-current="@cas.StatusId">
+                                            Change Status
+                                        </a>
+                                    </li>
+
+                                    <!-- Assign to Designer (Admin = 1, Supervisor = 2) -->
+                                    @if (ViewBag.UserRoleId == 1 || ViewBag.UserRoleId == 2)
+                                    {
+                                        <li>
+                                            <a class="dropdown-item assign-designer-btn"
+                                               href="#"
+                                               data-id="@cas.Id">
+                                                Assign To Designer
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </td>
+
                     </tr>
                 }
             </tbody>
@@ -54,11 +101,32 @@ else
             </ul>
         </nav>
     }
+
+    <!-- case status Modal -->
+    <div class="modal fade" id="statusModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Change Status</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <select class="form-control" id="statusSelect">
+                        @foreach (var status in Enum.GetValues(typeof(Case.Domain.Enum.CaseStatusEnum)))
+                        {
+                            <option value="@((int)status)">@status</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="saveStatus">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  
 }
 
-<script>
-    // ربط Select All (اختياري)
-    document.getElementById("selectAll")?.addEventListener("change", function () {
-        document.querySelectorAll('input[name="selectedIds"]').forEach(cb => cb.checked = this.checked);
-    });
-</script>

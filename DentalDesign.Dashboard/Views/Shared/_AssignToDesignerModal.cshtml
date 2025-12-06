@@ -1,0 +1,24 @@
+﻿<!-- Assign to Designer Modal -->
+@Html.AntiForgeryToken()
+<div class="modal fade" id="assignDesignerModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Assign to Designer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="designerSelect" class="form-label">Select Designer</label>
+                    <select id="designerSelect" class="form-select">
+                        <option value="">-- Choose Designer --</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" id="assignSaveBtn" class="btn btn-primary">Assign</button>
+            </div>
+        </div>
+    </div>
+</div>

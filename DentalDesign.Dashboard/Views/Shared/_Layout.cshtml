@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="~/DentalDesign.Dashboard.styles.css" asp-append-version="true" />
 </head>
 <body>
+
     <header>
         @await Component.InvokeAsync("Navbar")
     </header>
@@ -23,6 +24,7 @@
     </div>
     
     @await Html.PartialAsync("_DeleteConfirmModal")
+    @await Html.PartialAsync("_AssignToDesignerModal");
 
     <footer class="border-top footer text-muted">
         <div class="container">
@@ -43,6 +45,9 @@
     <script src="~/js/feature/search.js"></script>
     <script src="~/js/feature/supervisor/supervisor-create.js"></script>
     <script src="~/js/feature/designer/designer-create.js"></script>
+    <script src="~/js/feature/case/case-status.js"></script>
+    <script src="~/js/feature/case/case-details.js"></script>
+    <script src="~/js/feature/case/assign-case.js"></script>
     <script src="~/js/feature/delete-modal.js"></script> <!-- Glogal -->
 
     <script>

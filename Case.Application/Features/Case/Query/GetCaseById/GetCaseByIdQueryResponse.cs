@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Case.Application.Features.Case.Query.GetCaseById
 {
-    internal class GetCaseByIdQueryResponse
+    public class GetCaseByIdQueryResponse
     {
         public Guid Id { get; set; }
         public string CaseName { get; set; }

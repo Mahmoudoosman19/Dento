@@ -18,7 +18,7 @@ namespace DentalDesign.Dashboard
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             // Common Services
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddHttpClient();
@@ -66,6 +66,7 @@ namespace DentalDesign.Dashboard
 
             app.UseMiddleware<TokenForwardingMiddleware>();
             app.UseMiddleware<ActionPermissionMiddleware>();
+
             app.UseAuthentication();
             app.UseAuthorization();
 

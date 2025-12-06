@@ -1,0 +1,49 @@
+﻿@model Case.Application.Features.Case.Query.GetCaseById.GetCaseByIdQueryResponse
+
+@using Case.Domain.Enum 
+
+@if (Model == null)
+{
+    <div class="alert alert-danger">Case not found.</div>
+}
+else
+{
+    <div class="card">
+        <div class "card-header">
+            <h4>Case Details</h4>
+        </div>
+        <div class="card-body">
+            <p><strong>Case Name:</strong> @Model.CaseName</p>
+            
+            <p><strong>Case Type:</strong> @Model.CaseType.ToString()</p>
+            
+            <p><strong>Description:</strong></p>
+            @if (!string.IsNullOrWhiteSpace(Model.Description))
+            {
+                <div class="alert alert-info">@Model.Description</div>
+            }
+            else
+            {
+                <p class="text-muted">No description provided.</p>
+            }
+
+            <p><strong>Status:</strong> @((CaseStatusEnum)Model.StatusId).ToString()</p>
+
+            <p><strong>Due Date:</strong> @Model.DueDate.ToString("yyyy-MM-dd")</p>
+
+            <p><strong>Designer ID:</strong> @(Model.DesignertId?.ToString() ?? "Not assigned")</p>
+
+            <p><strong>Customer ID:</strong> @Model.CustomerId.ToString()</p>
+
+            <p><strong>Created:</strong> @Model.CreatedOnUtc.ToString("yyyy-MM-dd HH:mm")</p>
+            @if (Model.ModifiedOnUtc.HasValue)
+            {
+                <p><strong>Modified:</strong> @Model.ModifiedOnUtc.Value.ToString("yyyy-MM-dd HH:mm")</p>
+            }
+            <p><strong>Assigned At:</strong> @Model.AssignedAt.ToString("yyyy-MM-dd HH:mm")</p>
+        </div>
+        <div class="card-footer">
+            <button type="button" class="btn btn-secondary" onclick="window.history.back()">Back to Cases</button>
+        </div>
+    </div>
+}

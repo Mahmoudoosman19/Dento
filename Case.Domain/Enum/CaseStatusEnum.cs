@@ -9,9 +9,7 @@ namespace Case.Domain.Enum
     public enum CaseStatusEnum
     {
         New = 1,
-        Assigned,
         Active,
-        Submitted,
         Reviewed,
         Approved,
         Canceled,
