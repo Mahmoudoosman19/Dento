@@ -7,13 +7,16 @@ namespace UserManagement.Application.Features.User.Commands.UpdateUserProfile
 {
     public sealed class UpdateProfileCommand : ICommand
     {
-        [DisplayName("الاسم باللغة الانجليزية")]
+        [DisplayName("Name")]
         public string? FullNameEn { get; init; }
-        [DisplayName("الجنس")]
+        [DisplayName("Gender")]
         public UserGender Gender { get; set; }
-        [DisplayName("تاريخ الميلاد")]
+        [DisplayName("Birth Date")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? BirthDate { get; set; }
+        [DisplayName("Phone Number")]
+        public string? PhoneNumber { get; set; }
+
     }
 }

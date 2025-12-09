@@ -1,0 +1,72 @@
+﻿<div class="container mt-4" >
+    
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="fw-bold">My Profile</h3>
+    </div>
+
+    <!-- Profile Card -->
+    <div class="card shadow-sm rounded-3 p-4">
+
+        <form id="profileForm" method="post" asp-action="UpdateProfile" asp-controller="Account">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="Id" value="@Model.Id" />
+
+            <!-- Non-editable section -->
+            <h5 class="border-bottom pb-2 mb-3">Account Information</h5>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label>Email</label>
+                    <input class="form-control" value="@Model.Email" readonly />
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Username</label>
+                    <input class="form-control" value="@Model.UserName" readonly />
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Account Type</label>
+                    <input class="form-control" value="@Model.RoleName" readonly />
+                </div>
+
+                
+            </div>
+
+            <!-- Editable section -->
+            <h5 class="border-bottom pb-2 mt-4 mb-3">Personal Information</h5>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label>Full Name</label>
+                    <input class="form-control" name="FullNameEn" value="@Model.FullNameEn" />
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Phone Number</label>
+                    <input class="form-control" name="PhoneNumber" value="@Model.PhoneNumber" />
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Birth Date</label>
+                    <input type="date" class="form-control" name="BirthDate"
+                           value="@(Model.BirthDate?.ToString("yyyy-MM-dd"))" />
+                </div>
+
+                
+            </div>
+
+            <!-- Submit Button -->
+            <div class="mt-4 text-end">
+                <button type="submit" class="btn btn-primary px-4">
+                    Update Profile
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+
+

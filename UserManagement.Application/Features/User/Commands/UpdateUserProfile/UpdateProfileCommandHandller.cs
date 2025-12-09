@@ -41,6 +41,7 @@ namespace UserManagement.Application.Features.User.Commands.UpdateUserProfile
         {
             user.SetFullName(request.FullNameEn);
             user.SetBirthDate(request.BirthDate);
+            user.SetPhoneNumber(request.PhoneNumber);
             user.SetGender(request.Gender);
         }
     }

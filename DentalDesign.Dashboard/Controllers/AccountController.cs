@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserManagement.Application.Features.Auth.Commands.Login;
+using UserManagement.Application.Features.User.Commands.UpdateUserProfile;
+using UserManagement.Application.Features.User.Queries.GetUserData;
 
 namespace DentalDesign.Dashboard.Controllers
 {
@@ -29,11 +31,11 @@ namespace DentalDesign.Dashboard.Controllers
             if (!result.IsSuccess)
                 return Unauthorized(result);
 
-        
+
             Response.Cookies.Append("AuthToken", result.Data.Token, new CookieOptions
             {
                 HttpOnly = true,
-                Secure = true,               
+                Secure = true,
                 SameSite = SameSiteMode.None,
                 Expires = DateTime.UtcNow.AddHours(3)
             });
@@ -52,6 +54,28 @@ namespace DentalDesign.Dashboard.Controllers
             Response.Cookies.Delete("AuthToken");
 
             return RedirectToAction("Login", "Account");
+        }
+
+        public async Task<IActionResult> Profile()
+        {
+            var result = await Sender.Send(new GetUserDataQuery());
+
+            // إذا كان الطلب AJAX (أو جزئي)، نُرجع PartialView
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                return PartialView("_Profile", result.Data);
+            }
+
+            // وإلا، نُرجع الصفحة الكاملة
+            return View(result.Data);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateProfile(UpdateProfileCommand cmd)
+        {
+            var result = await Sender.Send(cmd);
+            return Json(result);
         }
     }
 }

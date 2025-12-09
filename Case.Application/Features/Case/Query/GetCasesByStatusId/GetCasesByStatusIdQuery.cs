@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Case.Application.Features.Case.Query.GetCasesByStatusId
 {
-    public class GetCasesByStatusIdQuery : IQuery<IReadOnlyList<Domain.Entities.Case>>
+    public class GetCasesByStatusIdQuery : IQuery<IReadOnlyList<GetCasesByStatusIdQueryResponse>>
     {
         public long StatusId { get; set; }
     }

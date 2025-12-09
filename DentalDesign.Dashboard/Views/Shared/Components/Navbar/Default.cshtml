@@ -80,7 +80,11 @@
                 </a>
 
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarUserDropdown">
-                    <li><a class="dropdown-item" href="/Account/Profile">Profile</a></li>
+                    <li>
+                        <a class="dropdown-item" href="/Account/Profile" onclick="SpaLoader.loadPage('/Account/Profile'); return false;">
+                            My Profile
+                        </a>
+                    </li>
                     <li><a class="dropdown-item" href="/Account/Settings">Settings</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li class="nav-item ms-auto">

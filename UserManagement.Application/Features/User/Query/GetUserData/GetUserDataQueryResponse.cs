@@ -11,6 +11,15 @@ namespace UserManagement.Application.Features.User.Queries.GetUserData
         public string FullNameAr { get; set; } = null!;
         public string FullNameEn { get; set; } = null!;
         public long RoleId { get; set; } = 0;
+        public string RoleName
+        {
+            get => Enum.GetName(typeof(Domain.Enums.Roles), RoleId) ?? "Unknown";
+            set
+            {
+                if (Enum.TryParse(typeof(Domain.Enums.Roles), value, out var parsed))
+                    RoleId = (long)parsed!;
+            }
+        }
         public string Status { get; set; }
         public int Points { get; set; }    
         public UserGender Gender { get; set; }

@@ -14,6 +14,7 @@ window.EventBinder = (function () {
         bindPagination();
         bindEditForms();
         bindSelectAll();
+        bindProfileForm();
     }
 
     // === Private Helpers ===
@@ -32,8 +33,51 @@ window.EventBinder = (function () {
     }
 
     function bindSearch() {
-        // سيتم تفعيله تلقائيًا عبر search.js عند وجود #searchInput
-        // لا حاجة لربط يدوي هنا
+        
+    }
+
+    // === Profile Form Handler ===
+    function bindProfileForm() {
+        const form = document.getElementById('profileForm');
+        if (!form || form.dataset.bound) return;
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const formData = new FormData(form);
+
+            const token = form.querySelector('input[name="__RequestVerificationToken"]')?.value;
+
+            try {
+                const res = await fetch(form.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'RequestVerificationToken': token
+                    },
+                    body: formData // يبقى كما هو (FormData)
+                });
+
+                const data = await res.json().catch(() => ({}));
+
+                if (res.ok && data?.isSuccess) {
+                    ['FullNameEn', 'PhoneNumber', 'BirthDate'].forEach(name => {
+                        const el = document.querySelector(`[name="${name}"]`);
+                        if (el) el.value = formData.get(name);
+                    });
+                    (window.parent?.showGlobalAlert || showGlobalAlert)?.("Profile updated successfully!", "success");
+                } else {
+                    const msg = data?.message || "Failed to update profile.";
+                    (window.parent?.showGlobalAlert || showGlobalAlert)?.("Update failed: " + msg, "danger");
+                }
+            } catch (err) {
+                console.error("Fetch error:", err);
+                (window.parent?.showGlobalAlert || showGlobalAlert)?.("Network error occurred.", "danger");
+            }
+        });
+
+        form.dataset.bound = "true";
     }
 
     function bindPagination() {

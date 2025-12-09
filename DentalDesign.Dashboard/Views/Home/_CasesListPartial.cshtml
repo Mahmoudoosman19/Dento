@@ -1,0 +1,26 @@
+﻿@model List<DentalDesign.Dashboard.Models.Case.CaseViewModel>
+<div class="card p-3 shadow-sm">
+    <h5 class="fw-bold">Cases @ViewBag.Status</h5>
+
+    <table class="table table-bordered mt-3">
+        <thead class="table-light">
+            <tr>
+                <th>ID</th>
+                <th>Case Name</th>
+                <th>Designer</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cas in Model)
+            {
+                <tr>
+                    <td>@cas.Id</td>
+                    <td>@cas.CaseName</td>
+                    <td>@cas.DesignerName</td>
+                </tr>
+            }
+           
+
+        </tbody>
+    </table>
+</div>

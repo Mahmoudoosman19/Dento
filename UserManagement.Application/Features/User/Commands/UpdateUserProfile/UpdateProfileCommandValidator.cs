@@ -12,13 +12,9 @@ namespace UserManagement.Application.Features.User.Commands.UpdateUserProfile
 
         private void ValidationRules()
         {
-            RuleFor(x => x.Gender)
-                .NotEmpty().WithMessage(Messages.EmptyField)
-                .WithMessage(Messages.IncorrectData);
+           
 
-            RuleFor(x => x.BirthDate)
-                .NotEmpty().WithMessage(Messages.EmptyField)
-                .WithMessage(Messages.IncorrectData);
+       
         }
     }
 }

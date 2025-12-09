@@ -61,34 +61,29 @@
         }
     });
 
-    // ✅ دالة لإظهار رسالة علوية
     function showTopAlert(message, type = "success") {
-        // إزالة الرسالة القديمة إن وجدت
-        const oldAlert = document.getElementById("top-alert");
-    if (oldAlert) oldAlert.remove();
+             const oldAlert = document.getElementById("top-alert");
+         if (oldAlert) oldAlert.remove();
 
-    // إنشاء رسالة جديدة
-    const alertDiv = document.createElement("div");
-    alertDiv.id = "top-alert";
-    alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
-    alertDiv.style.cssText = `
-    position: fixed;
-    top: 60px;
-    right: 20px;
-    z-index: 9999;
-    max-width: 350px;
-    `;
-    alertDiv.innerHTML = `
-    ${message}
-    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    `;
+         const alertDiv = document.createElement("div");
+         alertDiv.id = "top-alert";
+         alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+         alertDiv.style.cssText = `
+         position: fixed;
+         top: 60px;
+         right: 20px;
+         z-index: 9999;
+         max-width: 350px;
+         `;
+         alertDiv.innerHTML = `
+         ${message}
+         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+         `;
 
-    // إضافته إلى الـ body
-    document.body.appendChild(alertDiv);
+         document.body.appendChild(alertDiv);
 
-        // إزالته تلقائيًا بعد 3 ثواني
-        setTimeout(() => {
-            const alert = document.getElementById("top-alert");
-    if (alert) alert.remove();
-        }, 3000);
+             setTimeout(() => {
+                 const alert = document.getElementById("top-alert");
+         if (alert) alert.remove();
+             }, 3000);
     }

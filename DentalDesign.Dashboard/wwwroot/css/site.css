@@ -20,3 +20,9 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.status-card:hover {
+    transform: scale(1.03);
+    transition: 0.2s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}

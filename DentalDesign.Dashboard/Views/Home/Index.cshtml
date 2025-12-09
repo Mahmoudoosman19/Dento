@@ -1,5 +1,8 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@* index  *@
+@{
+    Layout = "_Layout";
+    ViewBag.Title = "Cases";
 }
 
-
+@await Html.PartialAsync("_IndexPartial")
+<script src="~/js/feature/home/home.js"></script>

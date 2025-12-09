@@ -1,0 +1,46 @@
+﻿@* index partial  *@
+
+<div class="container mt-4">
+
+    <!-- Total Cases -->
+    <div class="card shadow-sm p-3 mb-4" style="border-left: 5px solid #4e73df;">
+        <h5 class="fw-bold">Total Cases</h5>
+        <h2 id="totalCasesCount" class="text-primary">0</h2>
+    </div>
+
+    <!-- Status Cards -->
+    <div class="row g-3">
+
+        <!-- New -->
+        <div class="col-md-4">
+            <div class="card status-card shadow-sm p-3"
+                 data-status="1"
+                 style="border-left: 5px solid #1cc88a; cursor:pointer;">
+                <h6 class="fw-bold">New Cases</h6>
+                <h3 id="newCasesCount" class="text-success">0</h3>
+            </div>
+        </div>
+
+        <!-- Active -->
+        <div class="col-md-4">
+            <div class="card status-card shadow-sm p-3"
+                 data-status="2"
+                 style="border-left: 5px solid #36b9cc; cursor:pointer;">
+                <h6 class="fw-bold">Active Cases</h6>
+                <h3 id="activeCasesCount" class="text-info">0</h3>
+            </div>
+        </div>
+
+        <!-- Approved -->
+        <div class="col-md-4">
+            <div class="card status-card shadow-sm p-3"
+                 data-status="4"
+                 style="border-left: 5px solid #f6c23e; cursor:pointer;">
+                <h6 class="fw-bold">Approved Cases</h6>
+                <h3 id="approvedCasesCount" class="text-warning">0</h3>
+            </div>
+        </div>
+
+    </div>
+
+</div>
