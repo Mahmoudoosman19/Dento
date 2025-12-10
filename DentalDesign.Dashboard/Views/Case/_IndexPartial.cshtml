@@ -30,7 +30,8 @@ else
                     <tr data-id="@cas.Id">
                         <td>
                             <a href="@Url.Action("Details", "Case", new { id = cas.Id })"
-                               class="ajax-link">
+                               class="ajax-link"
+                               data-case-id="@cas.Id">
                                 @cas.CaseName
                             </a>
                         </td>

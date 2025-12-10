@@ -27,20 +27,19 @@ else
                 <p class="text-muted">No description provided.</p>
             }
 
-            <p><strong>Status:</strong> @((CaseStatusEnum)Model.StatusId).ToString()</p>
+            <p><strong>Status:</strong> @((CaseStatusEnum)Model.StatusId)</p>
 
             <p><strong>Due Date:</strong> @Model.DueDate.ToString("yyyy-MM-dd")</p>
 
-            <p><strong>Designer ID:</strong> @(Model.DesignertId?.ToString() ?? "Not assigned")</p>
-
-            <p><strong>Customer ID:</strong> @Model.CustomerId.ToString()</p>
-
-            <p><strong>Created:</strong> @Model.CreatedOnUtc.ToString("yyyy-MM-dd HH:mm")</p>
-            @if (Model.ModifiedOnUtc.HasValue)
+            <p><strong>Designer:</strong> @(ViewBag.DesignerName?.ToString() ?? "Not assigned")</p>
+            @if (!string.IsNullOrEmpty(ViewBag.Model3DUrl))
             {
-                <p><strong>Modified:</strong> @Model.ModifiedOnUtc.Value.ToString("yyyy-MM-dd HH:mm")</p>
+                <h5>3D Model:</h5>
+                <div id="viewer-@Model.Id" style="width:1000px;height:600px"
+                     data-model-url="@ViewBag.Model3DUrl"></div>
             }
-            <p><strong>Assigned At:</strong> @Model.AssignedAt.ToString("yyyy-MM-dd HH:mm")</p>
+
+
         </div>
         <div class="card-footer">
             <button type="button" class="btn btn-secondary" onclick="window.history.back()">Back to Cases</button>

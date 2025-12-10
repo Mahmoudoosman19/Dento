@@ -40,6 +40,7 @@ namespace DentalDesign.Dashboard.Models.Case
         }
 
         public DateTime AssignedAt { get; set; }
+        public string? Model3DUrl { get; set; }
     }
 
 }

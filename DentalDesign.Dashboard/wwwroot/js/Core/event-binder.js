@@ -23,8 +23,11 @@ window.EventBinder = (function () {
             if (!link.dataset.bound) {
                 link.addEventListener("click", function (e) {
                     e.preventDefault();
-                    if (window.SpaLoader) {
-                        window.SpaLoader.loadPage(this.href);
+                    const caseId = this.dataset.caseId;
+                    if (caseId && window.loadCaseDetails) {
+                        loadCaseDetails(e, caseId);
+                    } else if (window.SpaLoader) {
+                        window.SpaLoader.loadPage(this.href); 
                     }
                 });
                 link.dataset.bound = "true";

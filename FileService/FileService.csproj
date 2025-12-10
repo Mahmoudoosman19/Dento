@@ -9,10 +9,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="2.3.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Service\" />
+    <PackageReference Include="Supabase" Version="1.1.1" />
+    <PackageReference Include="Supabase.Storage" Version="2.4.1" />
   </ItemGroup>
 
 </Project>

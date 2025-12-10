@@ -20,5 +20,6 @@ namespace Case.Application.Features.Case.Query.GetCaseById
         public string? Description { get; set; }
         public CaseTypeEnum CaseType { get; set; }
         public DateTime AssignedAt { get; set; }
+        public string? Model3DPath { get; set; }
     }
 }

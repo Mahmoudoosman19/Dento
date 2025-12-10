@@ -1,4 +1,6 @@
 ﻿using Common.Application.Behaviors;
+using FileService.Abstraction;
+using FileService.Service;
 using FluentValidation;
 using Mapster;
 using MapsterMapper;
@@ -30,6 +32,8 @@ namespace Case.Application
                 includeInternalTypes: true);
 
             services.AddMapsterConfig();
+
+            services.AddSingleton<IFileStorageService, SupabaseFileStorageService>();
 
             return services;
         }

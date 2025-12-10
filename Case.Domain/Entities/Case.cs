@@ -19,8 +19,9 @@ namespace Case.Domain.Entities
         public DateTime DueDate { get;  private set; }
         public string? Description {  get; private set; }
         public CaseTypeEnum CaseType { get; private set; }
-        public DateTime AssignedAt { get; private set; } 
+        public DateTime AssignedAt { get; private set; }
 
+        public string? Model3DPath { get; private set; }
         public void SetCustomerId(Guid customerId)
         {
             CustomerId = customerId;
@@ -53,5 +54,6 @@ namespace Case.Domain.Entities
         {
             AssignedAt = assignedAt;
         }
+        public void SetModel3DPath(string path) => Model3DPath = path;
     }
 }

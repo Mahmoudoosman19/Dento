@@ -1,0 +1,20 @@
+{
+  "version": "3.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "provider": "jsdelivr",
+      "library": "three@0.181.2",
+      "destination": "wwwroot/lib/three/"
+    },
+    {
+      "library": "three.js@0.180.0",
+      "destination": "wwwroot/three.js/"
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "stl-loader@1.0.0",
+      "destination": "wwwroot/lib/stl-loader/"
+    }
+  ]
+}

@@ -9,7 +9,7 @@ namespace UserManagement.Application.Specifications.Designer
             AddCriteria(c => c.RoleId == roleId);
             AddCriteria(x => x.Id == id || x.Id == id);
 
-            AddInclude($"{nameof(Domain.Entities.User)}");
+            //AddInclude($"{nameof(Domain.Entities.User)}");
 
         }
     }

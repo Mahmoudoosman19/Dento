@@ -7,12 +7,14 @@ using Case.Application.Features.Case.Query.GetCasesAssignedToDesigner;
 using Case.Domain.Enum;
 using Common.Domain.Shared;
 using DentalDesign.Dashboard.Models.Case;
+using FileService.Abstraction;
 using IdentityHelper.Abstraction;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using UserManagement.Application.Abstractions;
+using UserManagement.Application.Features.Designer.Queries.GetDesignerById;
 using UserManagement.Application.Features.Designer.Queries.GetListDesigners;
 using UserManagement.Application.Features.User.Queries.GetUserData;
 using static Google.Apis.Requests.BatchRequest;
@@ -27,15 +29,6 @@ namespace DentalDesign.Dashboard.Controllers
         {
             _tokenExtractor = tokenExtractor;
         }
-        //public IActionResult Index()
-        //{
-        //    // لو الطلب AJAX → رجّع Partial
-        //    if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
-        //        return PartialView("_IndexPartial");
-
-        //    // لو الطلب عادي → رجّع صفحة كاملة بالـ Layout
-        //    return View();
-        //}
 
         public async Task<IActionResult> Index()
         {
@@ -132,6 +125,16 @@ namespace DentalDesign.Dashboard.Controllers
                     : NotFound();
             }
 
+            var designerQuery = new GetDesignerQuery { Id = (Guid)response.Data.DesignertId };
+            var designerResponse = await Sender.Send(designerQuery);
+
+            if (!string.IsNullOrEmpty(response.Data.Model3DPath))
+            {
+                var storage = HttpContext.RequestServices.GetRequiredService<IFileStorageService>();
+                ViewBag.Model3DUrl = storage.GetSignedUrl(bucket: "Dento", response.Data.Model3DPath);
+            }
+
+            ViewBag.DesignerName = designerResponse.Data.FullNameEn;
             if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
                 return PartialView("_CaseDetailsPartial", response.Data);
 
