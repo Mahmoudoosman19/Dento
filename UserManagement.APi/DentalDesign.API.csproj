@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Case.Presentation\Case.Presentation.csproj" />
     <ProjectReference Include="..\IdentityHelper\IdentityHelper.csproj" />
+    <ProjectReference Include="..\Task.Presentation\Task.Presentation.csproj" />
     <ProjectReference Include="..\UserManagement.Presentation\UserManagement.Presentation.csproj" />
   </ItemGroup>
 

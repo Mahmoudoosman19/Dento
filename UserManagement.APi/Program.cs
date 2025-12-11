@@ -13,12 +13,13 @@ using UserManagement.Infrastructure.Seeders;
 using UserManagement.Presentation;
 using UserManagement.Presentation.Extensions;
 using UserManagement.Presentation.OptionsSetup;
+using Task.Presentation;
 
 namespace DentalDesign.API
 {
     public class Program
     {
-        public static async Task Main(string[] args)
+        public static async System.Threading.Tasks.Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -35,13 +36,17 @@ namespace DentalDesign.API
             // Add User Strapping
             builder.Services.AddUserPresentationStrapping(builder.Configuration);
 
+            //Add Task Strapping
+            builder.Services.AddTaskStrapping(builder.Configuration);
+
             // Identity & Authentication Services
             builder.Services.AddIdentityHelper();
 
 
             builder.Services.AddControllers()
                 .AddApplicationPart(UserManagement.Presentation.AssemblyReference.Assembly)
-                .AddApplicationPart(Case.Presentation.AssemblyReference.Assembly);
+                .AddApplicationPart(Case.Presentation.AssemblyReference.Assembly)
+                .AddApplicationPart(Task.Presentation.AssemblyReference.Assembly);
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
