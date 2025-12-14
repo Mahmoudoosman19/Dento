@@ -25,12 +25,11 @@ namespace FileService.Service
             var key = config["Supabase:Key"] ?? throw new ArgumentNullException("Supabase:Key");
             _defaultBucket = config["Supabase:DefaultBucket"] ?? "Dento";
 
-            // إنشاء العميل وتهيئته
+            
             _client = new Supabase.Client(url, key);
             // initialize sync (safe on startup)
             _client.InitializeAsync().GetAwaiter().GetResult();
 
-            // الحصول على Storage client (نوع IStorageClient<Bucket,FileObject>)
             _storage = _client.Storage;
         }
 

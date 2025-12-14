@@ -1,4 +1,5 @@
-﻿using Common.Presentation.Abstractions;
+﻿using Azure.Core;
+using Common.Presentation.Abstractions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,6 +12,8 @@ using Task.Application.Features.CaseTask.Command.AssignTask;
 using Task.Application.Features.CaseTask.Command.CreateTask;
 using Task.Application.Features.CaseTask.Command.EndTask;
 using Task.Application.Features.CaseTask.Command.StartTask;
+using Task.Application.Features.CaseTask.Command.UploadTaskFile;
+using Task.Application.Features.CaseTask.Query.DownloadTaskFile;
 using Task.Application.Features.CaseTask.Query.GetTaskById;
 using Task.Application.Features.CaseTask.Query.GetTasks;
 
@@ -65,6 +68,21 @@ namespace Task.Presentation.Controllers
         {
             var response = await Sender.Send(query);
             return HandleResult(response);
+        }
+
+
+        [HttpPost("upload")]
+        public async Task<IActionResult> Upload([FromForm] UploadTaskFileCommand command)
+        {
+            var response = await Sender.Send(command);
+            return HandleResult(response);
+        }
+
+        [HttpGet("download")]
+        public async Task<IActionResult> Download([FromQuery]DownloadTaskFileQuery query)
+        {
+            var response = await Sender.Send(query);
+            return File(response.Data, "application/octet-stream","task.stl");
         }
     }
 }

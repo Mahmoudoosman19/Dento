@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Common.Application\Common.Application.csproj" />
+    <ProjectReference Include="..\FileService\FileService.csproj" />
     <ProjectReference Include="..\IdentityHelper\IdentityHelper.csproj" />
     <ProjectReference Include="..\Task.Domain\Task.Domain.csproj" />
   </ItemGroup>

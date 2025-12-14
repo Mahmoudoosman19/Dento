@@ -25,11 +25,12 @@ namespace Case.Application.Features.Case.Command.UploadCaseFile
         public async Task<ResponseModel<string>> Handle(UploadCaseFileCommand request, CancellationToken cancellationToken)
         {
             var caseEntity = await _uow.Repository<Domain.Entities.Case>().GetByIdAsync(request.CaseId);
-            if (caseEntity == null) throw new KeyNotFoundException("Case not found");
+            if (caseEntity == null) 
+                return ResponseModel.Failure<string>("Case not found");
 
             // إنشاء path فريد لكل ملف
             var filePath = $"cases/{request.CaseId}/{Guid.NewGuid()}_{request.File.FileName}";
-
+            
             // رفع الملف
             using var stream = request.File.OpenReadStream();
             await _storage.UploadAsync("Dento", filePath, stream);
@@ -38,7 +39,7 @@ namespace Case.Application.Features.Case.Command.UploadCaseFile
             caseEntity.SetModel3DPath(filePath); 
              await _uow.CompleteAsync();
 
-            return filePath;
+            return ResponseModel.Success(filePath);
         }
     }
 }
